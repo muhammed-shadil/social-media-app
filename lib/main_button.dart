@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trek/utils/constants.dart';
+import 'package:trek/utils/styles.dart';
 
 class MainButton extends StatelessWidget {
   const MainButton({super.key, required this.buttontext, this.onpressed});
@@ -14,13 +16,9 @@ class MainButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          backgroundColor: const Color.fromARGB(255, 255, 77, 103),
+          backgroundColor: constants.secodarycolor,
         ),
-        child: Text(
-          buttontext,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400),
-        ),
+        child: Text(buttontext, style: styles.mainbuttontext),
       ),
     );
   }

@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:trek/utils/constants.dart';
+import 'package:trek/utils/styles.dart';
 
 class MainTextfield extends StatelessWidget {
   const MainTextfield(
       {super.key,
       required this.preicon,
       required this.hinttext,
-      required this.namefield});
+      required this.namefield,
+      required this.keyboard,
+      required this.validator, this.controller});
   final IconData preicon;
   final String hinttext;
   final String namefield;
+  final TextInputType keyboard;
+final TextEditingController? controller;
+  final String? Function(dynamic value) validator;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -23,20 +31,26 @@ class MainTextfield extends StatelessWidget {
           SizedBox(
             height: 45,
             child: TextFormField(
-              style: const TextStyle(color: Colors.white),
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                FilteringTextInputFormatter.deny(RegExp(r'\s')),
+              ],controller: controller,
+              validator: validator,
+              keyboardType: keyboard,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              style: const TextStyle(color: constants.white),
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: const EdgeInsets.all(10),
                 hintText: hinttext,
-                hintStyle: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.w300),
+                hintStyle: styles.textfieldhintstyle,
                 prefixIcon: Icon(
                   preicon,
-                  color: const Color.fromARGB(255, 255, 77, 103),
+                  color: constants.secodarycolor,
                 ),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none),
-                fillColor: const Color.fromARGB(255, 47, 48, 55),
+                fillColor: constants.fillcolor,
                 filled: true,
               ),
             ),

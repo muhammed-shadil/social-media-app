@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:trek/main_button.dart';
 import 'package:trek/main_textfield.dart';
+import 'package:trek/signup_screen.dart';
+import 'package:trek/utils/constants.dart';
 
 class SigninScreen extends StatelessWidget {
-  const SigninScreen({super.key});
+  SigninScreen({super.key});
 
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -23,20 +27,26 @@ class SigninScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
                     child: MainTextfield(
-                        preicon: Icons.email_outlined,
-                        hinttext: "Please enter your email",
-                        namefield: "Email"),
+                      preicon: Icons.email_outlined,
+                      hinttext: "Please enter your email",
+                      namefield: "Email",
+                      controller: emailcontroller,
+                      keyboard: TextInputType.emailAddress,
+                      validator: (value) {},
+                    ),
                   ),
-                  const MainTextfield(
-                      preicon: Icons.lock,
-                      hinttext: "Please enter your password",
-                      namefield: "Password"),
-                  const SizedBox(
-                    height: 30,
+                  MainTextfield(
+                    preicon: Icons.lock,
+                    hinttext: "Please enter your password",
+                    namefield: "Password",
+                    keyboard: TextInputType.visiblePassword,
+                    validator: (value) {},
+                    controller: passwordcontroller,
                   ),
+                  constants.height30,
                   MainButton(
                     buttontext: "Sign in",
                     onpressed: () {},
@@ -44,21 +54,21 @@ class SigninScreen extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 5),
                     child: Text(
-                      "or contineu with",
+                      "or continue with",
                       style: TextStyle(fontSize: 17),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 20),
                     decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 47, 48, 55),
+                        color: constants.fillcolor,
                         borderRadius: BorderRadius.circular(10)),
                     width: 40,
                     height: 40,
                     child: const Icon(
                       Icons.g_mobiledata,
                       size: 40,
-                      color: Color.fromARGB(255, 255, 77, 103),
+                      color: constants.secodarycolor,
                     ),
                   ),
                   const Spacer(),
@@ -72,10 +82,15 @@ class SigninScreen extends StatelessWidget {
                           style: TextStyle(),
                         ),
                         GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => SignupScreen()));
+                          },
                           child: const Text(
                             "Sign up",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 77, 103)),
+                            style: TextStyle(color: constants.secodarycolor),
                           ),
                         )
                       ],
