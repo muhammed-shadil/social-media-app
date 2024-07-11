@@ -28,31 +28,28 @@ final TextEditingController? controller;
             padding: const EdgeInsets.only(bottom: 5),
             child: Text(namefield),
           ),
-          SizedBox(
-            height: 45,
-            child: TextFormField(
-              textInputAction: TextInputAction.next,
-              inputFormatters: [
-                FilteringTextInputFormatter.deny(RegExp(r'\s')),
-              ],controller: controller,
-              validator: validator,
-              keyboardType: keyboard,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              style: const TextStyle(color: constants.white),
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(10),
-                hintText: hinttext,
-                hintStyle: styles.textfieldhintstyle,
-                prefixIcon: Icon(
-                  preicon,
-                  color: constants.secodarycolor,
-                ),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none),
-                fillColor: constants.fillcolor,
-                filled: true,
+          TextFormField(
+            textInputAction: TextInputAction.next,
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp(r'\s')),
+            ],controller: controller,
+            validator: validator,
+            keyboardType: keyboard,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            style: const TextStyle(color: constants.white),
+            decoration: InputDecoration(errorMaxLines: 3,
+              contentPadding: const EdgeInsets.all(10),
+              hintText: hinttext,
+              hintStyle: styles.textfieldhintstyle,
+              prefixIcon: Icon(
+                preicon,
+                color: constants.secodarycolor,
               ),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide.none),
+              fillColor: constants.fillcolor,
+              filled: true,
             ),
           )
         ],

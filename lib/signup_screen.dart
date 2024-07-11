@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trek/bloc/bloc/login_bloc.dart';
+import 'package:trek/home_page.dart';
 import 'package:trek/main_button.dart';
 import 'package:trek/main_textfield.dart';
+import 'package:trek/model/usermodel.dart';
 import 'package:trek/utils/constants.dart';
+
+class Signupwrapper extends StatelessWidget {
+  const Signupwrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LoginBloc(),
+      child: SignupScreen(),
+    );
+  }
+}
 
 class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
@@ -9,14 +25,16 @@ class SignupScreen extends StatelessWidget {
   TextEditingController passwordcontroller = TextEditingController();
   TextEditingController fullnamecontroller = TextEditingController();
   TextEditingController usernamecontroller = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Center(
           child: SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.9,
+            child: Form(
+              key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -43,14 +61,22 @@ class SignupScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: MainTextfield(
                       controller: emailcontroller,
                       preicon: Icons.email_outlined,
                       hinttext: "Please enter your email",
                       namefield: "Email",
                       keyboard: TextInputType.emailAddress,
-                      validator: (value) {},
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter a valid email";
+                        } else if (!constants.regemail.hasMatch(value)) {
+                          return "Please enter a valid email";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
                   ),
                   MainTextfield(
@@ -59,33 +85,74 @@ class SignupScreen extends StatelessWidget {
                     hinttext: "Please enter your password",
                     namefield: "Password",
                     keyboard: TextInputType.visiblePassword,
-                    validator: (value) {},
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter a password";
+                      } else if (!constants.password.hasMatch(value)) {
+                        return 'Password should contain at least one upper case, one lower case, one digit, one special character and  must be 8 characters in length';
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: MainTextfield(
                       controller: fullnamecontroller,
                       preicon: Icons.person_3_outlined,
                       hinttext: "Please enter your full name",
                       namefield: "Full name",
                       keyboard: TextInputType.name,
-                      validator: (value) {},
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter name";
+                        } else if (!constants.name.hasMatch(value)) {
+                          return "Enter a valid name";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 40),
+                    padding: const EdgeInsets.only(bottom: 40),
                     child: MainTextfield(
                       controller: usernamecontroller,
                       preicon: Icons.person_search_sharp,
                       hinttext: "Please enter your User name",
                       namefield: "User name",
                       keyboard: TextInputType.name,
-                      validator: (value) {},
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter name";
+                        } else if (!constants.name.hasMatch(value)) {
+                          return "Enter a valid name";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
                   ),
-                  MainButton(
-                    buttontext: "Sign in",
-                    onpressed: () {},
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MainButton(
+                      buttontext: "Sign in",
+                      onpressed: () {
+                        // if (formKey.currentState!.validate()) {
+                          final users = Usermodel(
+                            email: "sjhssss@gmsil",
+                            password: "ssjsjs234h4",
+                            username: "jwhk"
+                          );
+                          BlocProvider.of<LoginBloc>(context)
+                              .add(Signupevent(user: users));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (_) => const HomeScreen()));
+                        // }
+                      },
+                    ),
                   ),
                 ],
               ),
