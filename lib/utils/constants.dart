@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class constants {
+  //===============sharedpreferences================
+  static const String accessToken='TOKEN';
+  //======================================
   static const Color backgroundColor = Color.fromARGB(255, 26, 27, 34);
   static const Color secodarycolor = Color.fromARGB(255, 255, 77, 103);
   static const Color fillcolor = Color.fromARGB(255, 47, 48, 55);

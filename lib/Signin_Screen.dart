@@ -30,112 +30,126 @@ class SigninScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.95,
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 50),
-                      child: Text(
-                        "Sign in",
-                        style: TextStyle(fontSize: 20),
+        body: BlocListener<LoginBloc, LoginState>(
+          listener: (context, state) {
+            if (state is loadingstate) {
+              const Center(child: CircularProgressIndicator(color: Colors.white,));
+            } else if (state is loginerror) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.message)));
+            } else if (state is loginsuccess) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.message)));
+
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const HomeScreen()));
+            }
+          },
+          child: Center(
+            child: SingleChildScrollView(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.95,
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 50),
+                        child: Text(
+                          "Sign in",
+                          style: TextStyle(fontSize: 20),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: MainTextfield(
-                        preicon: Icons.email_outlined,
-                        hinttext: "Please enter your email",
-                        namefield: "Email",
-                        controller: emailcontroller,
-                        keyboard: TextInputType.emailAddress,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: MainTextfield(
+                          preicon: Icons.email_outlined,
+                          hinttext: "Please enter your email",
+                          namefield: "Email",
+                          controller: emailcontroller,
+                          keyboard: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter a valid email";
+                            } else if (!constants.regemail.hasMatch(value)) {
+                              return "Please enter a valid email";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      MainTextfield(
+                        preicon: Icons.lock,
+                        hinttext: "Please enter your password",
+                        namefield: "Password",
+                        keyboard: TextInputType.visiblePassword,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please enter a valid email";
-                          } else if (!constants.regemail.hasMatch(value)) {
-                            return "Please enter a valid email";
+                            return "Please enter a password";
+                          } else if (!constants.password.hasMatch(value)) {
+                            return 'Password should contain at least one upper case, one lower case, one digit, one special character and  must be 8 characters in length';
                           } else {
                             return null;
                           }
                         },
+                        controller: passwordcontroller,
                       ),
-                    ),
-                    MainTextfield(
-                      preicon: Icons.lock,
-                      hinttext: "Please enter your password",
-                      namefield: "Password",
-                      keyboard: TextInputType.visiblePassword,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please enter a password";
-                        } else if (!constants.password.hasMatch(value)) {
-                          return 'Password should contain at least one upper case, one lower case, one digit, one special character and  must be 8 characters in length';
-                        } else {
-                          return null;
-                        }
-                      },
-                      controller: passwordcontroller,
-                    ),
-                    constants.height30,
-                    MainButton(
-                      buttontext: "Sign in",
-                      onpressed: () {
-                        BlocProvider.of<LoginBloc>(context).add(Loginevent(
-                            "shaidyyaasl@gamil.com", "shaidll@!234"));
-                        // if (formKey.currentState!.validate()) {
-                        //   Navigator.push(context,
-                        //       MaterialPageRoute(builder: (_) => const HomeScreen()));
-                        // }
-                      },
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      child: Text(
-                        "or continue with",
-                        style: TextStyle(fontSize: 17),
+                      constants.height30,
+                      MainButton(
+                        buttontext: "Sign in",
+                        onpressed: () {
+                          if (formKey.currentState!.validate()) {
+                            BlocProvider.of<LoginBloc>(context).add(Loginevent(
+                                emailcontroller.text, passwordcontroller.text));
+                          }
+                        },
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      decoration: BoxDecoration(
-                          color: constants.fillcolor,
-                          borderRadius: BorderRadius.circular(10)),
-                      width: 40,
-                      height: 40,
-                      child: const Icon(
-                        Icons.g_mobiledata,
-                        size: 40,
-                        color: constants.secodarycolor,
-                      ),
-                    ),
-                    const Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Don't you have an account? ",
-                          style: TextStyle(),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Text(
+                          "or continue with",
+                          style: TextStyle(fontSize: 17),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => Signupwrapper()));
-                          },
-                          child: const Text(
-                            "Sign up",
-                            style: TextStyle(color: constants.secodarycolor),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        decoration: BoxDecoration(
+                            color: constants.fillcolor,
+                            borderRadius: BorderRadius.circular(10)),
+                        width: 40,
+                        height: 40,
+                        child: const Icon(
+                          Icons.g_mobiledata,
+                          size: 40,
+                          color: constants.secodarycolor,
+                        ),
+                      ),
+                      const Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Don't you have an account? ",
+                            style: TextStyle(),
                           ),
-                        )
-                      ],
-                    ),
-                  ],
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push( 
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => Signupwrapper()));
+                            },
+                            child: const Text(
+                              "Sign up",
+                              style: TextStyle(color: constants.secodarycolor),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

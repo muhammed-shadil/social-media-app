@@ -15,3 +15,6 @@ class Signupevent extends LoginEvent {
 
   Signupevent({required this.user});
 }
+class CheckLoginStatusEvent extends LoginEvent{
+  
+}

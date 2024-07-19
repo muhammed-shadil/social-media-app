@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trek/Signin_Screen.dart';
+import 'package:trek/splash_screen.dart';
 import 'package:trek/utils/constants.dart';
 
 void main() {
@@ -20,6 +21,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  signinwrapper();
+    return SplashScreen();
   }
 }
