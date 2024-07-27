@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trek/Signin_Screen.dart';
-import 'package:trek/splash_screen.dart';
+import 'package:trek/view/screens/Signin_Screen.dart';
+import 'package:trek/view/screens/splash_screen.dart';
 import 'package:trek/utils/constants.dart';
 
 void main() {

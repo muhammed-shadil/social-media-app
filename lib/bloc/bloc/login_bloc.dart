@@ -27,20 +27,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final Response response = await apirepository.login(data);
       final result = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        emit(loginsuccess(message: result['accessToken']));
+        emit(loginsuccess(message: "successfully login"));
         var sharedpref = await SharedPreferences.getInstance();
         final ss = sharedpref.setString(
-            constants.accessToken, result['accessToken'].toString());
-        print(
-            "${response.body} gggggggggggggg ${result['accessToken']}${result['username']}");
+            constants.accessToken, result['refreshToken'].toString());
+        // print(
+        //     "${response.body} gggggggggggggg ${result['accessToken']}${result['username']}");
       } else {
         emit(loginerror(message: result['error']));
-        print("${response.body} gggggggggggggg ${result['error']}");
+        // print("${response.body} gggggggggggggg ${result['error']}");
       }
     } catch (e) {
       emit(loginerror(message: e.toString()));
 
-      print(e);
+      // print(e);
     }
   }
 
@@ -74,15 +74,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       CheckLoginStatusEvent event, Emitter<LoginState> emit) async {
     var sharedPref = await SharedPreferences.getInstance();
     var isLoggedIn = sharedPref.getString(constants.accessToken);
-        print("rrrrr$isLoggedIn");
+        // print("rrrrr$isLoggedIn");
 
     try {
-      // await Future.delayed(const Duration(seconds: 2));
       if (isLoggedIn != null) {
-        print("qqqqqqqqq$isLoggedIn");
+        // print("qqqqqqqqq$isLoggedIn");
         emit(authenticated());
       } else {
-        print("eeeeeeeeeee$isLoggedIn");
+        // print("eeeeeeeeeee$isLoggedIn");
 
         emit(unauthenticated());
       }
