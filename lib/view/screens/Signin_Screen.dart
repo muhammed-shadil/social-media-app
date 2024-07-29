@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek/bloc/bloc/login_bloc.dart';
-import 'package:trek/view/screens/home_page.dart';
+import 'package:trek/view/screens/Home_Screen/home_page.dart';
 import 'package:trek/view/widgets/main_button.dart';
 import 'package:trek/view/widgets/main_textfield.dart';
 import 'package:trek/view/screens/signup_screen.dart';
@@ -33,7 +33,10 @@ class SigninScreen extends StatelessWidget {
         body: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is loadingstate) {
-              const Center(child: CircularProgressIndicator(color: Colors.white,));
+              const Center(
+                  child: CircularProgressIndicator(
+                color: Colors.white,
+              ));
             } else if (state is loginerror) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.message)));
@@ -136,7 +139,7 @@ class SigninScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push( 
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => Signupwrapper()));

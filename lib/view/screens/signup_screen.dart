@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek/view/screens/Signin_Screen.dart';
 import 'package:trek/bloc/bloc/login_bloc.dart';
-import 'package:trek/view/screens/home_page.dart';
+import 'package:trek/view/screens/Home_Screen/home_page.dart';
 import 'package:trek/view/widgets/main_button.dart';
 import 'package:trek/view/widgets/main_textfield.dart';
 import 'package:trek/model/usermodel.dart';

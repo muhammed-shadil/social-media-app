@@ -8,6 +8,9 @@ class constants {
   static const Color secodarycolor = Color.fromARGB(255, 255, 77, 103);
   static const Color fillcolor = Color.fromARGB(255, 47, 48, 55);
   static const Color white = Colors.white;
+  static const Color offwhite = Color.fromARGB(255, 150, 143, 143);
+
+
 // -----------------------------heights --------------------
   static const SizedBox height30 = SizedBox(
     height: 30,
