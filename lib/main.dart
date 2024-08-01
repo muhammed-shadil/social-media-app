@@ -7,11 +7,14 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
+        listTileTheme: ListTileThemeData(textColor: Colors.white),
         appBarTheme: const AppBarTheme(
             color: constants.backgroundColor, foregroundColor: constants.white),
         scaffoldBackgroundColor: constants.backgroundColor,
-        textTheme:
-            const TextTheme(bodyMedium: TextStyle(color: constants.white))),
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(color: constants.white),
+          bodyMedium: TextStyle(color: constants.white),
+        )),
     home: const MyApp(),
   ));
 }

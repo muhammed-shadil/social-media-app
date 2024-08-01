@@ -36,20 +36,32 @@ class FollowersScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: Column(
-          children: [
-            Center(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.88,
-                child: const SearchTextfield(
-                  preicon: Icons.search,
-                  hinttext: "search your friend",
-                  keyboard: TextInputType.name,
+        body: Center(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.95,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  width: MediaQuery.of(context).size.width * 0.88,
+                  child: const SearchTextfield(
+                    preicon: Icons.search,
+                    hinttext: "search your friend",
+                    keyboard: TextInputType.name,
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: ListView.separated(
+                      itemBuilder: (context, index) => const UserTile(),
+                      separatorBuilder: (context, index) => const SizedBox(
+                            height: 10,
+                          ),
+                      itemCount: 10),
+                )
+              ],
             ),
-            UserTile()
-          ],
+          ),
         ),
       ),
     );

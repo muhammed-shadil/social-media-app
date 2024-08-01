@@ -7,8 +7,9 @@ class UserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       tileColor: constants.fillcolor,
-      leading: CircleAvatar(
+      leading: const CircleAvatar(
         backgroundImage:
             AssetImage("assets/christopher-campbell-rDEOVtE7vOs-unsplash.jpg"),
       ),
