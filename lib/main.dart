@@ -7,7 +7,7 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
-        listTileTheme: ListTileThemeData(textColor: Colors.white),
+        listTileTheme: const ListTileThemeData(textColor: Colors.white),
         appBarTheme: const AppBarTheme(
             color: constants.backgroundColor, foregroundColor: constants.white),
         scaffoldBackgroundColor: constants.backgroundColor,
