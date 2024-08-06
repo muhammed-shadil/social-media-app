@@ -47,6 +47,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   FutureOr<void> signup(Signupevent event, Emitter<LoginState> emit) async {
     emit(loadingstate());
     Map data = {
+      "name": event.user.fullname,
       "email": event.user.email,
       "password": event.user.password,
       "username": event.user.username
@@ -74,7 +75,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       CheckLoginStatusEvent event, Emitter<LoginState> emit) async {
     var sharedPref = await SharedPreferences.getInstance();
     var isLoggedIn = sharedPref.getString(constants.accessToken);
-        // print("rrrrr$isLoggedIn");
+    // print("rrrrr$isLoggedIn");
 
     try {
       if (isLoggedIn != null) {

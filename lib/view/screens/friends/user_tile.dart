@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:trek/utils/constants.dart';
 
 class UserTile extends StatelessWidget {
-  const UserTile({super.key});
-
+  const UserTile({super.key, required this.name, required this.username});
+  final String name;
+  final String username;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -13,8 +14,8 @@ class UserTile extends StatelessWidget {
         backgroundImage:
             AssetImage("assets/christopher-campbell-rDEOVtE7vOs-unsplash.jpg"),
       ),
-      title: Text("Rockst Albert"),
-      subtitle: Text("rocks_se"),
+      title: Text(name),
+      subtitle: Text(username),
       trailing: Container(
         width: 40,
         height: 40,
