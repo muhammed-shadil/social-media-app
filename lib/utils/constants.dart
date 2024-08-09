@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class constants {
   //===============sharedpreferences================
   static const String accessToken='TOKEN';
+  static const String userid='USERID';
+
+
   //======================================
   static const Color backgroundColor = Color.fromARGB(255, 26, 27, 34);
   static const Color secodarycolor = Color.fromARGB(255, 255, 77, 103);
@@ -26,7 +29,7 @@ class constants {
       RegExp(r"^[a-zA-Z0-9_\-\.\S]{4,}[@][a-z]+[\.][a-z]{2,3}$");
 
   static final RegExp password =
-      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+      RegExp(r'^(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
 
   static final RegExp name = RegExp(r'^[A-Za-z]+$');
 }

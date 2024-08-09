@@ -68,7 +68,8 @@ class HomeScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => const FollowersScreenWrpper()));
+                                  builder: (_) =>
+                                      const FollowersScreenWrpper()));
                         },
                         child: const Icon(
                           Icons.group_outlined,

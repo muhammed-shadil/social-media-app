@@ -29,18 +29,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (response.statusCode == 200) {
         emit(loginsuccess(message: "successfully login"));
         var sharedpref = await SharedPreferences.getInstance();
-        final ss = sharedpref.setString(
+        final ss = await sharedpref.setString(
             constants.accessToken, result['refreshToken'].toString());
-        // print(
-        //     "${response.body} gggggggggggggg ${result['accessToken']}${result['username']}");
+        print("${result['refreshToken']}isssssssssssss");
+
+        final sp = await sharedpref.setString(
+            constants.userid, result['userId'].toString());
+        print("${result['userId']}isssssssssssss");
       } else {
         emit(loginerror(message: result['error']));
-        // print("${response.body} gggggggggggggg ${result['error']}");
       }
     } catch (e) {
       emit(loginerror(message: e.toString()));
-
-      // print(e);
     }
   }
 
@@ -59,15 +59,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (response.statusCode == 201) {
         emit(Signupsuccess(message: result['message']));
-        // print("${response.body} gggggggggggggg ${result['message']}");
       } else {
         emit(Signuperror(message: result['error']));
-        // print("${response.body} gggggggggggggg ${result['error']}");
       }
     } catch (e) {
       emit(Signuperror(message: e.toString()));
-
-      // print(e);
     }
   }
 
@@ -75,7 +71,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       CheckLoginStatusEvent event, Emitter<LoginState> emit) async {
     var sharedPref = await SharedPreferences.getInstance();
     var isLoggedIn = sharedPref.getString(constants.accessToken);
-    // print("rrrrr$isLoggedIn");
 
     try {
       if (isLoggedIn != null) {

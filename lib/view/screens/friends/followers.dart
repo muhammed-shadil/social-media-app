@@ -33,117 +33,126 @@ class _FollowersScreenState extends State<FollowersScreen> {
     BlocProvider.of<FollowersBloc>(context).add(FollowerUnfollwerEvent());
   }
 
-  late FollowersUnfollowers followersUnfollowers;
-  late Suggestion suggestion;
+  late FollowersUnfollowers find;
+  late List<Suggestion> friends;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FollowersBloc, FollowersState>(
-      builder: (context, state) {
-        if (state is SuccessFollewersUnfollowers) {
-          print("stateeeskkkkkkkkkkkkk");
-          followersUnfollowers = state.followersUnfollowers;
-          suggestion = state.suggestion;
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                leading: const Icon(Icons.arrow_back_ios_new),
-                title: const PreferredSize(
-                  preferredSize: Size.fromHeight(40.0),
-                  child: TabBar(
-                    indicatorColor: Colors.transparent,
-                    dividerColor: Colors.transparent,
-                    tabAlignment: TabAlignment.center,
-                    labelStyle: TextStyle(fontSize: 23),
-                    labelPadding: EdgeInsets.only(right: 10, left: 10),
-                    tabs: [
-                      SizedBox(
-                        child: Tab(
-                          text: "Friends",
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back_ios_new),
+              ),
+              title: const PreferredSize(
+                preferredSize: Size.fromHeight(40.0),
+                child: TabBar(
+                  indicatorColor: Colors.transparent,
+                  dividerColor: Colors.transparent,
+                  tabAlignment: TabAlignment.center,
+                  labelStyle: TextStyle(fontSize: 23),
+                  labelPadding: EdgeInsets.only(right: 10, left: 10),
+                  tabs: [
+                    SizedBox(
+                      child: Tab(
+                        text: "Friends",
+                      ),
+                    ),
+                    Tab(
+                      text: "Find",
+                    )
+                  ],
+                  labelColor: constants.white,
+                ),
+              ),
+            ),
+            body: TabBarView(children: [
+              Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(10),
+                        width: MediaQuery.of(context).size.width * 0.88,
+                        child: const SearchTextfield(
+                          preicon: Icons.search,
+                          hinttext: "search your friend",
+                          keyboard: TextInputType.name,
                         ),
                       ),
-                      Tab(
-                        text: "Find",
-                      )
+                      BlocBuilder<FollowersBloc, FollowersState>(
+                          builder: (context, state) {
+                        if (state is SuccessFollewersUnfollowers) {
+                          find = state.followersUnfollowers;
+                          friends = state.suggestons;
+                          return Expanded(
+                            child: ListView.separated(
+                                itemBuilder: (context, index) => UserTile(
+                                      name: friends[index].name,
+                                      username: friends[index].username,
+                                    ),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                itemCount: friends.length),
+                          );
+                        }
+                        return Container();
+                      })
                     ],
-                    labelColor: constants.white,
                   ),
                 ),
               ),
-              body: TabBarView(children: [
-                Center(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(10),
-                          width: MediaQuery.of(context).size.width * 0.88,
-                          child: const SearchTextfield(
-                            preicon: Icons.search,
-                            hinttext: "search your friend",
-                            keyboard: TextInputType.name,
-                          ),
+              Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(10),
+                        width: MediaQuery.of(context).size.width * 0.88,
+                        child: const SearchTextfield(
+                          preicon: Icons.search,
+                          hinttext: "Find your friend",
+                          keyboard: TextInputType.name,
                         ),
-                        Expanded(
-                          child: ListView.separated(
-                              itemBuilder: (context, index) => UserTile(
-                                    name: followersUnfollowers
-                                        .suggestions[index].name!,
-                                    username: followersUnfollowers
-                                        .suggestions[index].username,
-                                  ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                              itemCount:
-                                  followersUnfollowers.suggestions.length),
-                        )
-                      ],
-                    ),
+                      ),
+                      BlocBuilder<FollowersBloc, FollowersState>(
+                          builder: (context, state) {
+                        if (state is SuccessFollewersUnfollowers) {
+                          find = state.followersUnfollowers;
+
+                          return Expanded(
+                            child: ListView.separated(
+                                itemBuilder: (context, index) => UserTile(
+                                      name: find.suggestions[index].name,
+                                      username:
+                                          find.suggestions[index].username,
+                                    ),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                itemCount: find.suggestions.length
+                                // 3
+                                ),
+                          );
+                        }
+                        return Container();
+                      })
+                    ],
                   ),
                 ),
-                Center(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(10),
-                          width: MediaQuery.of(context).size.width * 0.88,
-                          child: const SearchTextfield(
-                            preicon: Icons.search,
-                            hinttext: "Find your friend",
-                            keyboard: TextInputType.name,
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView.separated(
-                              itemBuilder: (context, index) => UserTile(
-                                    name: suggestion.name!,
-                                    username: suggestion.username,
-                                  ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                              itemCount: 10),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ]),
-            ),
-          );
-        }
-        return Container();
-      },
-    );
+              ),
+            ])));
   }
 }

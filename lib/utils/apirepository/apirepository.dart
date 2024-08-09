@@ -10,10 +10,10 @@ class Apirepository {
   Future<http.Response> login(Map data) async {
     return apiprovider.loginUser(data);
   }
-   Future<http.Response> followunfollower() async {
-    return apiprovider.followerUnfollwers();
+   Future<http.Response> followunfollower(String token,String userId) async {
+    return apiprovider.followerUnfollwers(token,userId);
   }
-    Future<http.Response> suggestion() async {
-    return apiprovider.suggestions();
+    Future<http.Response> suggestion(String token) async {
+    return apiprovider.suggestions(token);
   }
 }

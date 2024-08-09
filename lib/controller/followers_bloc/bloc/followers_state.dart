@@ -8,11 +8,10 @@ final class FollowersInitial extends FollowersState {}
 
 class SuccessFollewersUnfollowers extends FollowersState {
   final FollowersUnfollowers followersUnfollowers;
-  final Suggestion suggestion;
-
+  final List<Suggestion> suggestons;
   SuccessFollewersUnfollowers({
     required this.followersUnfollowers,
-    required this.suggestion,
+    required this.suggestons,
   });
 }
 
