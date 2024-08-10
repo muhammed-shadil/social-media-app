@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:trek/controller/followers_bloc/bloc/followers_bloc.dart';
 import 'package:trek/model/FollewersUnfollowers_model.dart';
 import 'package:trek/utils/constants.dart';
+import 'package:trek/view/screens/friends/shimmer_followers.dart';
 import 'package:trek/view/screens/friends/user_tile.dart';
 import 'package:trek/view/widgets/search_textfield.dart';
 
@@ -14,7 +16,7 @@ class FollowersScreenWrpper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => FollowersBloc(),
-      child: FollowersScreen(),
+      child: const FollowersScreen(),
     );
   }
 }
@@ -105,7 +107,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
                                 itemCount: friends.length),
                           );
                         }
-                        return Container();
+                        return const ShimmerFollowers();
                       })
                     ],
                   ),
@@ -147,7 +149,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
                                 ),
                           );
                         }
-                        return Container();
+                        return const ShimmerFollowers();
                       })
                     ],
                   ),

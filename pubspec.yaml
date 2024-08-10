@@ -39,6 +39,7 @@ dependencies:
   http: ^1.2.1
   another_flutter_splash_screen: ^1.2.1
   shared_preferences: ^2.2.3
+  shimmer: ^3.0.0
  
 
 dev_dependencies:
