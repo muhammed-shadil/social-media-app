@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trek/view/screens/Home_Screen/single_post.dart';
+import 'package:trek/view/screens/profile_screen/profile_screen.dart';
 import 'package:trek/view/screens/signin/Signin_Screen.dart';
 import 'package:trek/view/screens/friends/followers.dart';
 
@@ -93,9 +94,17 @@ class HomeScreen extends StatelessWidget {
                         Icons.notifications_active_outlined,
                         size: 25,
                       )),
-                  const CircleAvatar(
-                    backgroundImage: AssetImage(
-                        "assets/gondola-ride-in-autumn-in-kashmir-2023-10-18t174214.790-min.png"),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const ProfileScreen()));
+                    },
+                    child: const CircleAvatar(
+                      backgroundImage: AssetImage(
+                          "assets/gondola-ride-in-autumn-in-kashmir-2023-10-18t174214.790-min.png"),
+                    ),
                   ),
                 ],
               ),

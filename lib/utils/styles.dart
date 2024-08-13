@@ -15,4 +15,5 @@ class styles {
       color: Color.fromARGB(255, 251, 249, 249),
       fontSize: 16,
       fontWeight: FontWeight.w300);
+  static const TextStyle bio = TextStyle(fontSize: 20);
 }

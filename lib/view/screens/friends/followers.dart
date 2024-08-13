@@ -100,7 +100,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
                   ),
                   BlocBuilder<FollowersBloc, FollowersState>(
                       builder: (context, state) {
-                        developer.log('the state of followers bloc is $state');
+                    developer.log('the state of followers bloc is $state');
                     if (state is SuccessFollewersUnfollowers) {
                       friends = state.suggestons;
                       print(friends[0].name);
