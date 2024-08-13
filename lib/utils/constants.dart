@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 class constants {
   //===============sharedpreferences================
-  static const String accessToken='TOKEN';
-  static const String userid='USERID';
-
+  static const String accessToken = 'TOKEN';
+  static const String userid = 'USERID';
 
   //======================================
   static const Color backgroundColor = Color.fromARGB(255, 26, 27, 34);
@@ -12,7 +11,6 @@ class constants {
   static const Color fillcolor = Color.fromARGB(255, 47, 48, 55);
   static const Color white = Colors.white;
   static const Color offwhite = Color.fromARGB(255, 150, 143, 143);
-
 
 // -----------------------------heights --------------------
   static const SizedBox height30 = SizedBox(
@@ -28,8 +26,7 @@ class constants {
   static final RegExp regemail =
       RegExp(r"^[a-zA-Z0-9_\-\.\S]{4,}[@][a-z]+[\.][a-z]{2,3}$");
 
-  static final RegExp password =
-      RegExp(r'^(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+  static final RegExp password = RegExp(r'^(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
 
   static final RegExp name = RegExp(r'^[A-Za-z]+$');
 }

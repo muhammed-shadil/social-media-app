@@ -27,7 +27,10 @@ class SinglePost extends StatelessWidget {
                     "Victor Daniel",
                     style: styles.usernamefont,
                   ),
-                  Text("Agra, New Delhi"),
+                  Text(
+                    "Agra, New Delhi",
+                    style: styles.postlocation,
+                  ),
                 ],
               ),
               const CircleAvatar(

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek/controller/authentication_bloc/login_bloc.dart';
+import 'package:trek/utils/styles.dart';
 import 'package:trek/view/screens/Home_Screen/home_page.dart';
 import 'package:trek/view/widgets/main_button.dart';
 import 'package:trek/view/widgets/main_textfield.dart';
-import 'package:trek/view/screens/signup_screen.dart';
+import 'package:trek/view/screens/signup/signup_screen.dart';
 import 'package:trek/utils/constants.dart';
 
 class signinwrapper extends StatelessWidget {
@@ -100,13 +101,43 @@ class SigninScreen extends StatelessWidget {
                         controller: passwordcontroller,
                       ),
                       constants.height30,
-                      MainButton(
-                        buttontext: "Sign in",
-                        onpressed: () {
-                          if (formKey.currentState!.validate()) {
-                            BlocProvider.of<LoginBloc>(context).add(Loginevent(
-                                emailcontroller.text, passwordcontroller.text));
+                      BlocBuilder<LoginBloc, LoginState>(
+                        builder: (context, state) {
+                          if (state is loadingstate) {
+                            return MainButton(
+                                onpressed: () {},
+                                child: const Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Signing in",
+                                      style: styles.textfieldhintstyle,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    SizedBox(
+                                        width: 15,
+                                        height: 15,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 1,
+                                          color: constants.white,
+                                        )),
+                                  ],
+                                ));
                           }
+                          return MainButton(
+                            child: const Text("Sign in",
+                                style: styles.mainbuttontext),
+                            onpressed: () {
+                              if (formKey.currentState!.validate()) {
+                                BlocProvider.of<LoginBloc>(context).add(
+                                    Loginevent(emailcontroller.text,
+                                        passwordcontroller.text));
+                              }
+                            },
+                          );
                         },
                       ),
                       const Padding(

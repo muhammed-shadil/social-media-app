@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trek/view/screens/Signin_Screen.dart';
+import 'package:trek/utils/styles.dart';
+import 'package:trek/view/screens/signin/Signin_Screen.dart';
 import 'package:trek/controller/authentication_bloc/login_bloc.dart';
 import 'package:trek/view/screens/Home_Screen/home_page.dart';
 import 'package:trek/view/widgets/main_button.dart';
@@ -34,9 +35,7 @@ class SignupScreen extends StatelessWidget {
       child: Scaffold(
         body: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
-            if (state is loadingstate) {
-              const CircularProgressIndicator();
-            } else if (state is Signuperror) {
+            if (state is Signuperror) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.message)));
             } else if (state is Signupsuccess) {
@@ -151,18 +150,47 @@ class SignupScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: MainButton(
-                        buttontext: "Sign in",
-                        onpressed: () {
-                          if (formKey.currentState!.validate()) {
-                            final users = Usermodel(
-                                fullname: fullnamecontroller.text,
-                                email: emailcontroller.text,
-                                password: passwordcontroller.text,
-                                username: usernamecontroller.text);
-                            BlocProvider.of<LoginBloc>(context)
-                                .add(Signupevent(user: users));
+                      child: BlocBuilder<LoginBloc, LoginState>(
+                        builder: (context, state) {
+                          if (state is loadingstate) {
+                            return MainButton(
+                                onpressed: () {},
+                                child: const Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Signing up",
+                                      style: styles.textfieldhintstyle,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    SizedBox(
+                                        width: 15,
+                                        height: 15,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 1,
+                                          color: constants.white,
+                                        )),
+                                  ],
+                                ));
                           }
+                          return MainButton(
+                            child: const Text("Sign up",
+                                style: styles.mainbuttontext),
+                            onpressed: () {
+                              if (formKey.currentState!.validate()) {
+                                final users = Usermodel(
+                                    fullname: fullnamecontroller.text,
+                                    email: emailcontroller.text,
+                                    password: passwordcontroller.text,
+                                    username: usernamecontroller.text);
+                                BlocProvider.of<LoginBloc>(context)
+                                    .add(Signupevent(user: users));
+                              }
+                            },
+                          );
                         },
                       ),
                     ),

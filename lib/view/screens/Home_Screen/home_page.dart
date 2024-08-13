@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trek/view/screens/Home_Screen/single_post.dart';
-import 'package:trek/view/screens/Signin_Screen.dart';
+import 'package:trek/view/screens/signin/Signin_Screen.dart';
 import 'package:trek/view/screens/friends/followers.dart';
 
 class HomeScreen extends StatelessWidget {

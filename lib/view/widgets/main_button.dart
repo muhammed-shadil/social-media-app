@@ -1,11 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
 
 class MainButton extends StatelessWidget {
-  const MainButton({super.key, required this.buttontext, this.onpressed});
-  final String buttontext;
+  const MainButton({
+    Key? key,
+    // required this.buttontext,
+    this.onpressed,
+    this.child,
+  }) : super(key: key);
+  // final String? buttontext;
   final Function()? onpressed;
+  final Widget? child;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -18,7 +26,7 @@ class MainButton extends StatelessWidget {
           ),
           backgroundColor: constants.secodarycolor,
         ),
-        child: Text(buttontext, style: styles.mainbuttontext),
+        child: child,
       ),
     );
   }

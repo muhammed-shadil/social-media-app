@@ -6,9 +6,13 @@ class styles {
 
   static const TextStyle fontSize20 = TextStyle(fontSize: 20);
   static const TextStyle textfieldhintstyle = TextStyle(
-      color: constants.white, fontWeight: FontWeight.w300, fontSize:18);
+      color: constants.white, fontWeight: FontWeight.w300, fontSize: 18);
   static const TextStyle mainbuttontext =
       TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400);
-  static const TextStyle usernamefont = TextStyle(fontSize: 20);
-
+  static const TextStyle usernamefont =
+      TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+  static const TextStyle postlocation = TextStyle(
+      color: Color.fromARGB(255, 251, 249, 249),
+      fontSize: 16,
+      fontWeight: FontWeight.w300);
 }
