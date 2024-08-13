@@ -20,3 +20,5 @@ class FaildFollewersUnfollowers extends FollowersState {
 
   FaildFollewersUnfollowers({required this.error});
 }
+
+ class FetchFollowLoadingstate extends FollowersState {}

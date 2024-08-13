@@ -31,11 +31,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         var sharedpref = await SharedPreferences.getInstance();
         final ss = await sharedpref.setString(
             constants.accessToken, result['refreshToken'].toString());
-        print("${result['refreshToken']}isssssssssssss");
+        print("${result['refreshToken']}");
+        print(result['accessToken']);
 
         final sp = await sharedpref.setString(
             constants.userid, result['userId'].toString());
-        print("${result['userId']}isssssssssssss");
+        print("${result['userId']}");
       } else {
         emit(loginerror(message: result['error']));
       }

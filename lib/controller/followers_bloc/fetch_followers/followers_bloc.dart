@@ -16,11 +16,12 @@ class FollowersBloc extends Bloc<FollowersEvent, FollowersState> {
   final Apirepository apirepository = Apirepository();
 
   FollowersBloc() : super(FollowersInitial()) {
-    on<FollowerUnfollwerEvent>(FollowerUnfollwerbloc);
+    on<FetchFollowerUnfollwerEvent>(fetchFollowerUnfollwerbloc);
   }
 
-  FutureOr<void> FollowerUnfollwerbloc(
-      FollowerUnfollwerEvent event, Emitter<FollowersState> emit) async {
+  FutureOr<void> fetchFollowerUnfollwerbloc(
+      FetchFollowerUnfollwerEvent event, Emitter<FollowersState> emit) async {
+    emit(FetchFollowLoadingstate());
     FollowersUnfollowers results2;
     List<Suggestion> results1;
     var sharedpref = await SharedPreferences.getInstance();
@@ -30,13 +31,16 @@ class FollowersBloc extends Bloc<FollowersEvent, FollowersState> {
     try {
       final Response response1 = await apirepository.suggestion(token!);
       final Response response2 =
-          await apirepository.followunfollower( token,userid!);
+          await apirepository.followunfollower(token, userid!);
       final result1 = jsonDecode(response1.body);
       final result2 = jsonDecode(jsonEncode(response2.body));
-
+      print(result2);
+      print(result1);
       if (response1.statusCode == 200 || response2.statusCode == 200) {
         results2 = FollowersUnfollowers.fromJson(result1);
         results1 = suggestionFromMap(result2.toString());
+        print(results1);
+        print(results2);
         emit(SuccessFollewersUnfollowers(
           followersUnfollowers: results2,
           suggestons: results1,
