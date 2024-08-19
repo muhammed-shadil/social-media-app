@@ -31,10 +31,8 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    final sharedpref = await SharedPreferences.getInstance();
-    final id = sharedpref.getString(constants.userid);
     BlocProvider.of<UserprofileBloc>(context).add(CurrentUserProfile());
   }
 
@@ -45,11 +43,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: BlocBuilder<UserprofileBloc, UserprofileState>(
           builder: (context, state) {
         if (state is UserProfileLoading) {
-          return const CircularProgressIndicator();
+          return Center(
+              child: const CircularProgressIndicator(
+            color: constants.white,
+          ));
         } else if (state is UserProfileFaild) {
           return Text(state.error);
         } else if (state is UserProfileSuccess) {
           result = state.userProfiles;
+          bool iscurrent = result.user.id == _getUserId;
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,14 +142,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      child: MainButton(
-                        child: const Text(
-                          "Follow",
-                          style: styles.mainbuttontext,
-                        ),
-                        onpressed: () {},
-                      ),
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      child: iscurrent
+                          ? MainButton(
+                              child: const Text(
+                                "Follow",
+                                style: styles.mainbuttontext,
+                              ),
+                              onpressed: () {},
+                            )
+                          : Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                      color: constants.secodarycolor)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Followers",
+                                    style: styles.usernamefont,
+                                  ),
+                                  constants.width10,
+                                  Text(
+                                    result.user.followers.length.toString(),
+                                    style: styles.bio,
+                                  )
+                                ],
+                              ),
+                            ),
                     ),
                     constants.width10,
                     const Icon(
@@ -202,4 +227,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }),
     );
   }
+}
+
+Future<String?> _getUserId() async {
+  final sharedPref = await SharedPreferences.getInstance();
+  return sharedPref.getString(constants.userid);
 }
