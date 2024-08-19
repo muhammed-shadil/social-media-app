@@ -69,4 +69,36 @@ class Apiprovider {
 
     return response;
   }
+  Future<http.Response> myfollowing(String refreshtoken,String id) async {
+    final response = await http.get(
+        Uri.parse(
+            "https://social-nest-backend.vercel.app/follow/fetch-following/$id"),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-refresh-token': refreshtoken,
+        });
+
+    return response;
+  }
+   Future<http.Response> currentuserprofile(String refreshtoken) async {
+    final response = await http.get(
+        Uri.parse(
+            "https://social-nest-backend.vercel.app/post/get-posts"),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-refresh-token': refreshtoken,
+        });
+
+    return response;
+  } Future<http.Response> userprofile(String refreshtoken,String id) async {
+    final response = await http.get(
+        Uri.parse(
+            "https://social-nest-backend.vercel.app/user/66b48c13b31b234ee74fd081"),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-refresh-token': refreshtoken,
+        });
+
+    return response;
+  }
 }

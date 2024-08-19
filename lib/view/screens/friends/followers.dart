@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:trek/controller/followers_bloc/bloc/follow_unfollow_bloc.dart';
 import 'package:trek/controller/followers_bloc/fetch_followers/followers_bloc.dart';
 import 'package:trek/model/FollewersUnfollowers_model.dart';
@@ -9,7 +7,6 @@ import 'package:trek/utils/constants.dart';
 import 'package:trek/view/screens/friends/shimmer_followers.dart';
 import 'package:trek/view/screens/friends/user_tile.dart';
 import 'package:trek/view/widgets/search_textfield.dart';
-import 'dart:developer' as developer;
 
 class FollowersScreenWrpper extends StatelessWidget {
   const FollowersScreenWrpper({super.key});
@@ -100,13 +97,12 @@ class _FollowersScreenState extends State<FollowersScreen> {
                   ),
                   BlocBuilder<FollowersBloc, FollowersState>(
                       builder: (context, state) {
-                    developer.log('the state of followers bloc is $state');
                     if (state is SuccessFollewersUnfollowers) {
                       friends = state.suggestons;
-                      print(friends[0].name);
+                      // print(friends[0].name);
                       if (friends.isEmpty) {
                         return const Center(
-                            child: Text("No suggestions found"));
+                            child: Text("No Friends found"));
                       }
                       return Expanded(
                         child: ListView.separated(
@@ -116,6 +112,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
                                   image: friends[index].profilePicture,
                                   enabled: false,
                                   uid: friends[index].id,
+                                  showicon: true,
                                 ),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(
@@ -126,7 +123,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
                     } else if (state is FetchFollowLoadingstate) {
                       return const ShimmerFollowers();
                     } else if (state is FaildFollewersUnfollowers) {
-                      print(state.error);
+                      // print(state.error);
                       return Text(state.error);
                     }
                     return const Center(
@@ -163,27 +160,26 @@ class _FollowersScreenState extends State<FollowersScreen> {
                       return Expanded(
                         child: ListView.separated(
                             itemBuilder: (context, index) => UserTile(
-                                  pressed: () {
-                                    print("eeeeeeeeeeee");
-                                  },
+                                  // pressed: () {
+                                  //   // print("eeeeeeeeeeee");
+                                  // },
                                   name: find.suggestions[index].name,
                                   username: find.suggestions[index].username,
                                   image: find.suggestions[index].profilePicture,
                                   enabled: true,
                                   uid: find.suggestions[index].id,
+                                  showicon: true,
                                 ),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(
                                   height: 10,
                                 ),
-                            itemCount: find.suggestions.length
-                            // 3
-                            ),
+                            itemCount: find.suggestions.length),
                       );
                     } else if (state is FetchFollowLoadingstate) {
                       return const ShimmerFollowers();
                     } else if (state is FaildFollewersUnfollowers) {
-                      print(state.error);
+                      // print(state.error);
                       return Text(state.error);
                     }
                     return const Text("No data available");

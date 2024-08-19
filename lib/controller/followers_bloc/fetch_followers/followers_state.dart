@@ -15,10 +15,18 @@ class SuccessFollewersUnfollowers extends FollowersState {
   });
 }
 
+class SuccessFollowings extends FollowersState {
+
+  final List<Suggestion> followings;
+  SuccessFollowings({
+    required this.followings,
+  });
+}
+
 class FaildFollewersUnfollowers extends FollowersState {
   final String error;
 
   FaildFollewersUnfollowers({required this.error});
 }
 
- class FetchFollowLoadingstate extends FollowersState {}
+class FetchFollowLoadingstate extends FollowersState {}

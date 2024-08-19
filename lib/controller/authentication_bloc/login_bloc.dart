@@ -31,8 +31,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         var sharedpref = await SharedPreferences.getInstance();
         final ss = await sharedpref.setString(
             constants.accessToken, result['refreshToken'].toString());
-        print("${result['refreshToken']}");
-        print(result['accessToken']);
+        // print("${result['refreshToken']}");
+        // print(result['accessToken']);
 
         final sp = await sharedpref.setString(
             constants.userid, result['userId'].toString());

@@ -7,8 +7,7 @@ class SinglePost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Color.fromARGB(255, 40, 39, 37),
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.78,
       width: MediaQuery.of(context).size.width * 0.9,
       child: Stack(
@@ -49,7 +48,6 @@ class SinglePost extends StatelessWidget {
                       ),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(30),
-                  color: const Color.fromARGB(255, 236, 234, 227),
                 ),
                 width: MediaQuery.of(context).size.width * 0.9,
                 height: MediaQuery.of(context).size.height * 0.6,
@@ -67,7 +65,6 @@ class SinglePost extends StatelessWidget {
                       topLeft: Radius.circular(25),
                       bottomRight: Radius.circular(25),
                       bottomLeft: Radius.circular(25)),
-                  color: const Color.fromARGB(255, 204, 162, 10),
                 ),
                 width: 90,
                 height: 120,

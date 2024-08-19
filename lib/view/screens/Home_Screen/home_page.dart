@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const ProfileScreen()));
+                              builder: (_) => const ProfileScreenWrapper()));
                     },
                     child: const CircleAvatar(
                       backgroundImage: AssetImage(

@@ -1,9 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trek/controller/followers_bloc/cubit/user_tile_cubit_cubit.dart';
+
 import 'package:trek/controller/followers_bloc/bloc/follow_unfollow_bloc.dart';
+import 'package:trek/controller/followers_bloc/cubit/user_tile_cubit_cubit.dart';
 import 'package:trek/utils/constants.dart';
-import 'dart:developer' as developer;
 
 class UserTile extends StatelessWidget {
   final String name;
@@ -13,6 +16,7 @@ class UserTile extends StatelessWidget {
   final Function()? pressed;
   final bool enabled;
   final String uid;
+  final bool showicon;
 
   const UserTile({
     Key? key,
@@ -23,12 +27,13 @@ class UserTile extends StatelessWidget {
     this.pressed,
     required this.enabled,
     required this.uid,
+    required this.showicon,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UserTileCubit(true), // Set initial follow state here
+      create: (context) => UserTileCubit(showicon),
       child: BlocBuilder<UserTileCubit, bool>(
         builder: (context, isFollow) {
           return ListTile(
@@ -70,8 +75,8 @@ class UserTile extends StatelessWidget {
                     //     ),
                     //   );
                     // }
-                    //  else 
-                     if (state is Following) {
+                    //  else
+                    if (state is Following) {
                       return enabled
                           ? Image.asset(isFollow
                               ? "assets/user-add.png"

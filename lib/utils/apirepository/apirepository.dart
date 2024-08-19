@@ -1,3 +1,4 @@
+import 'package:trek/model/UserProfile.dart';
 import 'package:trek/utils/apiprovider/apiprovider.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,5 +27,14 @@ class Apirepository {
 
   Future<http.Response> unfollowing(String token,String id) async {
     return apiprovider.unfollowingcall(token,id);
+
+  }
+  Future<http.Response>myfollowings(String token,String id)async{
+    return apiprovider.myfollowing(token, id);
+  }
+   Future<http.Response>currentuserprofile(String token)async{
+    return apiprovider.currentuserprofile(token);
+  } Future<http.Response>userprofile(String token,String id)async{
+    return apiprovider.userprofile(token, id);
   }
 }
