@@ -8,6 +8,7 @@ import 'package:trek/model/UserProfile.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
 import 'package:trek/view/screens/my_following/my_followings.dart';
+import 'package:trek/view/screens/profile_screen/popup_menu.dart';
 import 'package:trek/view/widgets/main_button.dart';
 
 class ProfileScreenWrapper extends StatelessWidget {
@@ -174,12 +175,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                     ),
-                    constants.width10,
-                    const Icon(
-                      Icons.more_vert_outlined,
-                      size: 30,
-                      color: constants.white,
-                    ),
+                    // constants.width10,
+                    PopupMenu()
                   ],
                 ),
                 Padding(

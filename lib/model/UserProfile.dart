@@ -77,6 +77,8 @@ class Post {
         "updatedAt": updatedAt,
         "__v": v,
     };
+
+  static fromJson(data) {}
 }
 
 class Comment {

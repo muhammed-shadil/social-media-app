@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trek/controller/post/cubit/fetch_posts_cubit.dart';
 import 'package:trek/view/screens/Home_Screen/single_post.dart';
 import 'package:trek/view/screens/profile_screen/profile_screen.dart';
 import 'package:trek/view/screens/signin/Signin_Screen.dart';
 import 'package:trek/view/screens/friends/followers.dart';
+
+class HomeScreenWrapper extends StatelessWidget {
+  const HomeScreenWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => FetchPostsCubit()..fetchPosts(),
+      child: const HomeScreen(),
+    );
+  }
+}
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -108,12 +122,43 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              body: const SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [SinglePost(), SinglePost()],
-                  ),
-                ),
+              body: BlocBuilder<FetchPostsCubit, FetchPostsState>(
+                builder: (context, state) {
+                  if (state is FetchPostsInitial ||
+                      (state is PostLoading && state.posts.isEmpty)) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is PostLoaded) {
+                    return NotificationListener<ScrollNotification>(
+                      onNotification: (ScrollNotification scrollInfo) {
+                        if (scrollInfo.metrics.pixels ==
+                                scrollInfo.metrics.maxScrollExtent &&
+                            state.hasMoreData) {
+                          context
+                              .read<FetchPostsCubit>()
+                              .fetchPosts(); // Fetch more posts when reaching the bottom
+                        }
+                        return false;
+                      },
+                      child: ListView.builder(
+                        itemCount:
+                            state.posts.length + (state.hasMoreData ? 1 : 0),
+                        itemBuilder: (context, index) {
+                          if (index == state.posts.length) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          print(state.posts[index].blogContent);
+                          return const SinglePost(
+                              // imageUrl: state.posts[index].imageUrl,
+                              // description: state.posts[index].description,
+                              );
+                        },
+                      ),
+                    );
+                  } else if (state is PostError) {
+                    return Center(child: Text('Error: ${state.message}'));
+                  }
+                  return Container();
+                },
               )),
         ),
       ),

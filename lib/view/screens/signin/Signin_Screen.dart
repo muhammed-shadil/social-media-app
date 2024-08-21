@@ -46,7 +46,7 @@ class SigninScreen extends StatelessWidget {
                   .showSnackBar(SnackBar(content: Text(state.message)));
 
               Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const HomeScreen()));
+                  MaterialPageRoute(builder: (_) => const HomeScreenWrapper()));
             }
           },
           child: Center(

@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Timer(const Duration(seconds: 3), () async {
             if (state is authenticated) {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const HomeScreen()));
+                  MaterialPageRoute(builder: (_) => const HomeScreenWrapper()));
             } else if (state is unauthenticated) {
               Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const signinwrapper()));
