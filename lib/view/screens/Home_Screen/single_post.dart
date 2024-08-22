@@ -3,17 +3,21 @@ import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
 
 class SinglePost extends StatefulWidget {
-  const SinglePost({super.key});
-
+  SinglePost({super.key, required this.username, required this.location});
+  final String username;
+  final String location;
   @override
   _SinglePostState createState() => _SinglePostState();
 }
 
-class _SinglePostState extends State<SinglePost> {
+class _SinglePostState extends State<SinglePost>
+    with AutomaticKeepAliveClientMixin {
   bool isSwapped = false;
-
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -30,23 +34,28 @@ class _SinglePostState extends State<SinglePost> {
           // Text and Avatar (unchanged)
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 width: 25,
               ),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Victor Daniel",
-                    style: styles.usernamefont,
-                  ),
-                  Text(
-                    "Agra, New Delhi",
-                    style: styles.postlocation,
-                  ),
-                ],
+              Spacer(),
+              SizedBox(width: 180,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.username,
+                      style: styles.usernamefont,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      widget.location,
+                      style: styles.postlocation,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
               const CircleAvatar(
                 backgroundImage: AssetImage(

@@ -18,11 +18,11 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
   final int _limit = 2;
   bool _hasMoreData = true;
   List<Fetchpost> _posts = [];
-
+  bool _isLoadingMore = false; 
   Future<void> fetchPosts() async {
     print("dddddddddddddddddddddddd");
-
-    if (!_hasMoreData) return;
+  if (!_hasMoreData || _isLoadingMore) return;
+    _isLoadingMore = true;
     var sharedpref = await SharedPreferences.getInstance();
 
     final token = sharedpref.getString(constants.accessToken);
@@ -45,10 +45,7 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
         print(response);
         print(response.statusCode);
         print(response.body);
-        // List<Post> fetchedPosts
-        // = (json.decode(response.body))
-        //     .map((data) => Post.fromJson(data))
-        //     .toList();
+    
 
         final result = jsonDecode(response.body);
         print(result.runtimeType);
@@ -60,6 +57,7 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
           _hasMoreData = false;
         }
         print("rrrrrrrrrrrrrrr");
+         _isLoadingMore = false;
         emit(PostLoaded(posts: _posts, hasMoreData: _hasMoreData));
       } else {
         emit(PostError(message: 'Failed to load posts'));

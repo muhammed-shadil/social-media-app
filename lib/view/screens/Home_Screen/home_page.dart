@@ -15,14 +15,14 @@ class HomeScreenWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => FetchPostsCubit()..fetchPosts(),
-      child: const HomeScreen(),
+      child: HomeScreen(),
     );
   }
 }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
+  HomeScreen({super.key});
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                 leadingWidth: 130,
                 centerTitle: true,
                 leading: Padding(
-                  padding: EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     children: [
                       const Padding(
@@ -122,43 +122,77 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              body: BlocBuilder<FetchPostsCubit, FetchPostsState>(
-                builder: (context, state) {
-                  if (state is FetchPostsInitial ||
-                      (state is PostLoading && state.posts.isEmpty)) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is PostLoaded) {
-                    return NotificationListener<ScrollNotification>(
-                      onNotification: (ScrollNotification scrollInfo) {
-                        if (scrollInfo.metrics.pixels ==
-                                scrollInfo.metrics.maxScrollExtent &&
-                            state.hasMoreData) {
-                          context
-                              .read<FetchPostsCubit>()
-                              .fetchPosts(); // Fetch more posts when reaching the bottom
-                        }
-                        return false;
-                      },
-                      child: ListView.builder(
-                        itemCount:
-                            state.posts.length + (state.hasMoreData ? 1 : 0),
-                        itemBuilder: (context, index) {
-                          if (index == state.posts.length) {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                          print(state.posts[index].blogContent);
-                          return const SinglePost(
-                              // imageUrl: state.posts[index].imageUrl,
-                              // description: state.posts[index].description,
+              body: Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: BlocBuilder<FetchPostsCubit, FetchPostsState>(
+                    builder: (context, state) {
+                      if (state is PostLoading) {
+                        if (state.posts.isEmpty) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else {
+                          return ListView.builder(
+                            controller: _scrollController,
+                            key: const PageStorageKey('postList'),
+                            itemCount: state.posts.length,
+                            itemBuilder: (context, index) {
+                              if (index == state.posts.length) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              print(state.posts[index].blogContent);
+                              return SinglePost(
+                                username: state.posts[index].authorDetails.name,
+                                location:
+                                    state.posts[index].authorDetails.email,
+                                // imageUrl: state.posts[index].imageUrl,
+                                // description: state.posts[index].description,
                               );
-                        },
-                      ),
-                    );
-                  } else if (state is PostError) {
-                    return Center(child: Text('Error: ${state.message}'));
-                  }
-                  return Container();
-                },
+                            },
+                          );
+                        }
+                      } else if (state is PostLoaded) {
+                        return NotificationListener<ScrollNotification>(
+                          onNotification: (ScrollNotification scrollInfo) {
+                            if (_scrollController.position.pixels ==
+                                    _scrollController
+                                        .position.maxScrollExtent &&
+                                state.hasMoreData) {
+                              context
+                                  .read<FetchPostsCubit>()
+                                  .fetchPosts(); // Fetch more posts when reaching the bottom
+                            }
+                            return false;
+                          },
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            key: const PageStorageKey('postList'),
+                            itemCount: state.posts.length +
+                                (state.hasMoreData ? 1 : 0),
+                            itemBuilder: (context, index) {
+                              if (index == state.posts.length) {
+                                return Center(
+                                    child: const CircularProgressIndicator());
+                              }
+                              print(state.posts[index].blogContent);
+                              return SinglePost(
+                                username: state.posts[index].authorDetails.name,
+                                location:
+                                    state.posts[index].authorDetails.email,
+                                // imageUrl: state.posts[index].imageUrl,
+                                // description: state.posts[index].description,
+                              );
+                            },
+                          ),
+                        );
+                      } else if (state is PostError) {
+                        return Center(child: Text('Error: ${state.message}'));
+                      }
+                      return Container();
+                    },
+                  ),
+                ),
               )),
         ),
       ),
