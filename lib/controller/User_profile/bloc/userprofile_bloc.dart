@@ -32,17 +32,19 @@ class UserprofileBloc extends Bloc<UserprofileEvent, UserprofileState> {
       print(result);
       print(response.statusCode);
       if (response.statusCode == 200) {
+        print("22222222");
         results = CurrentUserProfiles.fromMap(result);
-        print(results.posts);
-        print(results.user.email);
+        // print(results.posts);
+        print("the emial is ${results.user.email}");
         print(results.user.profilePicture);
         print(results);
         emit(UserProfileSuccess(userProfiles: results));
       } else {
-        emit(UserProfileFaild(error: 'message'));
+        emit(UserProfileFaild(error: "ttttttttttttt"));
       }
     } catch (e) {
-      emit(UserProfileFaild(error: 'message'));
+      print(e.toString());
+      emit(UserProfileFaild(error: e.toString()));
     }
   }
 }

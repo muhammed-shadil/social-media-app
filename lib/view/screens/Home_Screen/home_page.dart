@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trek/controller/post/cubit/fetch_posts_cubit.dart';
+import 'package:trek/view/screens/Home_Screen/shimmer_home.dart';
 import 'package:trek/view/screens/Home_Screen/single_post.dart';
 import 'package:trek/view/screens/profile_screen/profile_screen.dart';
 import 'package:trek/view/screens/signin/Signin_Screen.dart';
@@ -129,8 +129,9 @@ class HomeScreen extends StatelessWidget {
                     builder: (context, state) {
                       if (state is PostLoading) {
                         if (state.posts.isEmpty) {
-                          return const Center(
-                              child: CircularProgressIndicator());
+                          return const shimmer_home();
+                          // const Center(
+                          //     child: CircularProgressIndicator());
                         } else {
                           return ListView.builder(
                             controller: _scrollController,
@@ -172,8 +173,8 @@ class HomeScreen extends StatelessWidget {
                                 (state.hasMoreData ? 1 : 0),
                             itemBuilder: (context, index) {
                               if (index == state.posts.length) {
-                                return Center(
-                                    child: const CircularProgressIndicator());
+                                return const Center(
+                                    child: CircularProgressIndicator());
                               }
                               print(state.posts[index].blogContent);
                               return SinglePost(

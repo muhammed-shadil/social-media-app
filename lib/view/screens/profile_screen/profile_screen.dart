@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Text(
                     result.user.bio == ''
                         ? "welcome to my profile"
-                        : result.user.bio,
+                        : result.user.bio!,
                     style: styles.bio,
                   ),
                 ),
