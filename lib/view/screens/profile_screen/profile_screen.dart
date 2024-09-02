@@ -12,8 +12,8 @@ import 'package:trek/view/screens/profile_screen/popup_menu.dart';
 import 'package:trek/view/widgets/main_button.dart';
 
 class ProfileScreenWrapper extends StatelessWidget {
-  const ProfileScreenWrapper({super.key});
-
+  const ProfileScreenWrapper({super.key, this.userid});
+  final String? userid;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -24,8 +24,8 @@ class ProfileScreenWrapper extends StatelessWidget {
 }
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
+  const ProfileScreen({super.key, this.userid});
+  final String? userid;
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -44,8 +44,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: BlocBuilder<UserprofileBloc, UserprofileState>(
           builder: (context, state) {
         if (state is UserProfileLoading) {
-          return Center(
-              child: const CircularProgressIndicator(
+          return const Center(
+              child: CircularProgressIndicator(
             color: constants.white,
           ));
         } else if (state is UserProfileFaild) {

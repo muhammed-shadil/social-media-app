@@ -21,20 +21,28 @@ class Apirepository {
     return apiprovider.suggestions(token);
   }
 
-  Future<http.Response> following(String token,String id) async {
-    return apiprovider.followingcall(token,id);
+  Future<http.Response> following(String token, String id) async {
+    return apiprovider.followingcall(token, id);
   }
 
-  Future<http.Response> unfollowing(String token,String id) async {
-    return apiprovider.unfollowingcall(token,id);
-
+  Future<http.Response> unfollowing(String token, String id) async {
+    return apiprovider.unfollowingcall(token, id);
   }
-  Future<http.Response>myfollowings(String token,String id)async{
+
+  Future<http.Response> myfollowings(String token, String id) async {
     return apiprovider.myfollowing(token, id);
   }
-   Future<http.Response>currentuserprofile(String token)async{
+
+  Future<http.Response> currentuserprofile(String token) async {
     return apiprovider.currentuserprofile(token);
-  } Future<http.Response>userprofile(String token,String id)async{
+  }
+
+  Future<http.Response> userprofile(String token, String id) async {
     return apiprovider.userprofile(token, id);
+  }
+
+  Future<http.Response> fetchAllposts(
+      String token, int limit, int currentPage) async {
+    return apiprovider.fetchAllposts(limit, currentPage, token);
   }
 }

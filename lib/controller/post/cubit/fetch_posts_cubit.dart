@@ -2,26 +2,30 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:trek/model/UserProfile.dart';
 import 'package:trek/model/postmodel.dart';
+import 'package:trek/utils/apirepository/apirepository.dart';
 import 'package:trek/utils/constants.dart';
 
 part 'fetch_posts_state.dart';
 
 class FetchPostsCubit extends Cubit<FetchPostsState> {
+  Apirepository apirepository = Apirepository();
+
   FetchPostsCubit() : super(FetchPostsInitial());
 
   int _currentPage = 1;
   final int _limit = 2;
   bool _hasMoreData = true;
   List<Fetchpost> _posts = [];
-  bool _isLoadingMore = false; 
+  bool _isLoadingMore = false;
   Future<void> fetchPosts() async {
     print("dddddddddddddddddddddddd");
-  if (!_hasMoreData || _isLoadingMore) return;
+    if (!_hasMoreData || _isLoadingMore) return;
     _isLoadingMore = true;
     var sharedpref = await SharedPreferences.getInstance();
 
@@ -30,14 +34,8 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
         posts: _posts)); // Emit current posts with a loading indicator
 
     try {
-      final response = await http.get(
-        Uri.parse(
-            'https://social-nest-backend.vercel.app/post/all-posts?page=$_currentPage&limit=$_limit'),
-        headers: {
-          'Content-Type': 'application/json',
-          'x-refresh-token': token!,
-        },
-      );
+      final Response response =
+          await apirepository.fetchAllposts(token!, _limit, _currentPage);
       print("qqqqqqqqqqqqqqqqqqqq");
       print(response.statusCode);
 
@@ -45,7 +43,6 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
         print(response);
         print(response.statusCode);
         print(response.body);
-    
 
         final result = jsonDecode(response.body);
         print(result.runtimeType);
@@ -57,7 +54,7 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
           _hasMoreData = false;
         }
         print("rrrrrrrrrrrrrrr");
-         _isLoadingMore = false;
+        _isLoadingMore = false;
         emit(PostLoaded(posts: _posts, hasMoreData: _hasMoreData));
       } else {
         emit(PostError(message: 'Failed to load posts'));

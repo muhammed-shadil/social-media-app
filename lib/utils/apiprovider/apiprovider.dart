@@ -46,7 +46,7 @@ class Apiprovider {
     return response;
   }
 
-  Future<http.Response> followingcall(String refreshtoken,String id) async {
+  Future<http.Response> followingcall(String refreshtoken, String id) async {
     final response = await http.post(
         Uri.parse(
             "https://social-nest-backend.vercel.app/follow/follow-user/$id"),
@@ -58,7 +58,7 @@ class Apiprovider {
     return response;
   }
 
-  Future<http.Response> unfollowingcall(String refreshtoken,String id) async {
+  Future<http.Response> unfollowingcall(String refreshtoken, String id) async {
     final response = await http.post(
         Uri.parse(
             "https://social-nest-backend.vercel.app/follow/unfollow-user/$id"),
@@ -69,7 +69,8 @@ class Apiprovider {
 
     return response;
   }
-  Future<http.Response> myfollowing(String refreshtoken,String id) async {
+
+  Future<http.Response> myfollowing(String refreshtoken, String id) async {
     final response = await http.get(
         Uri.parse(
             "https://social-nest-backend.vercel.app/follow/fetch-following/$id"),
@@ -80,17 +81,19 @@ class Apiprovider {
 
     return response;
   }
-   Future<http.Response> currentuserprofile(String refreshtoken) async {
+
+  Future<http.Response> currentuserprofile(String refreshtoken) async {
     final response = await http.get(
-        Uri.parse(
-            "https://social-nest-backend.vercel.app/post/get-posts"),
+        Uri.parse("https://social-nest-backend.vercel.app/post/get-posts"),
         headers: {
           'Content-Type': 'application/json',
           'x-refresh-token': refreshtoken,
         });
 
     return response;
-  } Future<http.Response> userprofile(String refreshtoken,String id) async {
+  }
+
+  Future<http.Response> userprofile(String refreshtoken, String id) async {
     final response = await http.get(
         Uri.parse(
             "https://social-nest-backend.vercel.app/user/66b48c13b31b234ee74fd081"),
@@ -99,6 +102,19 @@ class Apiprovider {
           'x-refresh-token': refreshtoken,
         });
 
+    return response;
+  }
+
+  Future<http.Response> fetchAllposts(
+      int limit, int currentPage, String refreshtoken) async {
+    final response = await http.get(
+      Uri.parse(
+          'https://social-nest-backend.vercel.app/post/all-posts?page=$currentPage&limit=$limit'),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-refresh-token': refreshtoken,
+      },
+    );
     return response;
   }
 }
