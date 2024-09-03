@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
+import 'package:trek/view/screens/profile_screen/profile_screen.dart';
 
 class SinglePost extends StatefulWidget {
-  SinglePost({super.key, required this.username, required this.location});
+  SinglePost(
+      {super.key,
+      required this.username,
+      required this.location,
+      required this.userid});
   final String username;
+  final String userid;
+
   final String location;
   @override
   _SinglePostState createState() => _SinglePostState();
@@ -40,7 +47,8 @@ class _SinglePostState extends State<SinglePost>
                 width: 25,
               ),
               Spacer(),
-              SizedBox(width: 180,
+              SizedBox(
+                width: 180,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -57,9 +65,19 @@ class _SinglePostState extends State<SinglePost>
                   ],
                 ),
               ),
-              const CircleAvatar(
-                backgroundImage: AssetImage(
-                    "assets/christopher-campbell-rDEOVtE7vOs-unsplash.jpg"),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => ProfileScreenWrapper(
+                                userid: widget.userid,
+                              )));
+                },
+                child: const CircleAvatar(
+                  backgroundImage: AssetImage(
+                      "assets/christopher-campbell-rDEOVtE7vOs-unsplash.jpg"),
+                ),
               )
             ],
           ),

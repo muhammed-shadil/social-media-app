@@ -147,6 +147,7 @@ class HomeScreen extends StatelessWidget {
                                 username: state.posts[index].authorDetails.name,
                                 location:
                                     state.posts[index].authorDetails.email,
+                                userid: state.posts[index].authorDetails.id,
                                 // imageUrl: state.posts[index].imageUrl,
                                 // description: state.posts[index].description,
                               );
@@ -181,6 +182,7 @@ class HomeScreen extends StatelessWidget {
                                 username: state.posts[index].authorDetails.name,
                                 location:
                                     state.posts[index].authorDetails.email,
+                                userid: state.posts[index].authorDetails.id,
                                 // imageUrl: state.posts[index].imageUrl,
                                 // description: state.posts[index].description,
                               );

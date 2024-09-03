@@ -4,7 +4,11 @@ part of 'userprofile_bloc.dart';
 @immutable
 sealed class UserprofileEvent {}
 
-class CurrentUserProfile extends UserprofileEvent {}
+class CurrentUserProfile extends UserprofileEvent {
+  final String id;
+
+  CurrentUserProfile({required this.id});
+}
 
 class UserProfile extends UserprofileEvent {
   final String id;
