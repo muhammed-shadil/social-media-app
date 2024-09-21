@@ -29,12 +29,19 @@ class ShimmerFollowers extends StatelessWidget {
                     baseColor: const Color.fromARGB(255, 31, 32, 38),
                     highlightColor: const Color.fromARGB(255, 54, 55, 61),
                     child: Container(
-                        color: Colors.blueAccent, child: const Text("name"))),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blueAccent,
+                        ),
+                        child: const Text("name"))),
                 subtitle: Shimmer.fromColors(
                     baseColor: const Color.fromARGB(255, 31, 32, 38),
                     highlightColor: const Color.fromARGB(255, 54, 55, 61),
                     child: Container(
-                        color: Colors.blueAccent,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.blueAccent,
+                        ),
                         child: const Text("username"))),
                 trailing: Shimmer.fromColors(
                   baseColor: const Color.fromARGB(255, 31, 32, 38),

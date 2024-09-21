@@ -144,12 +144,9 @@ class HomeScreen extends StatelessWidget {
                               }
                               print(state.posts[index].blogContent);
                               return SinglePost(
-                                username: state.posts[index].authorDetails.name,
-                                location:
-                                    state.posts[index].authorDetails.email,
-                                userid: state.posts[index].authorDetails.id,
-                                // imageUrl: state.posts[index].imageUrl,
-                                // description: state.posts[index].description,
+                                authorDetails: state.posts[index].authorDetails,
+                                postType: state.posts[index].contentType,
+                                posts: state.posts[index],
                               );
                             },
                           );
@@ -179,12 +176,9 @@ class HomeScreen extends StatelessWidget {
                               }
                               print(state.posts[index].blogContent);
                               return SinglePost(
-                                username: state.posts[index].authorDetails.name,
-                                location:
-                                    state.posts[index].authorDetails.email,
-                                userid: state.posts[index].authorDetails.id,
-                                // imageUrl: state.posts[index].imageUrl,
-                                // description: state.posts[index].description,
+                                authorDetails: state.posts[index].authorDetails,
+                                postType: state.posts[index].contentType,
+                                posts: state.posts[index],
                               );
                             },
                           ),

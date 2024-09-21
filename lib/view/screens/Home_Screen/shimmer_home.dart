@@ -33,7 +33,9 @@ class shimmer_home extends StatelessWidget {
                         baseColor: const Color.fromARGB(255, 31, 32, 38),
                         highlightColor: const Color.fromARGB(255, 54, 55, 61),
                         child: Container(
-                          color: Colors.amber,
+                          decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(10)),
                           child: const Text(
                             "Victor Daniel",
                             style: styles.usernamefont,
@@ -44,7 +46,9 @@ class shimmer_home extends StatelessWidget {
                           baseColor: const Color.fromARGB(255, 31, 32, 38),
                           highlightColor: const Color.fromARGB(255, 54, 55, 61),
                           child: Container(
-                              color: Colors.amber,
+                              decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(10)),
                               child: Text("Agra, New Delhi"))),
                     ],
                   ),

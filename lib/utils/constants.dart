@@ -22,9 +22,13 @@ class constants {
   static const SizedBox height10 = SizedBox(
     height: 10,
   );
+   static const SizedBox height3 = SizedBox(
+    height: 3,
+  );
    static const SizedBox width10 = SizedBox(
     width: 10,
   );
+
 
   static final RegExp regemail =
       RegExp(r"^[a-zA-Z0-9_\-\.\S]{4,}[@][a-z]+[\.][a-z]{2,3}$");

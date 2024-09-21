@@ -17,5 +17,8 @@ class styles {
       fontWeight: FontWeight.w300);
   static const TextStyle bio = TextStyle(fontSize: 20);
 
- static const TextStyle popupMenuButton =  TextStyle(color: Colors.white,fontSize: 17);
+  static const TextStyle popupMenuButton =
+      TextStyle(color: Colors.white, fontSize: 17);
+  static const TextStyle blogtitle =
+      TextStyle(color: Colors.white, fontSize: 18);
 }

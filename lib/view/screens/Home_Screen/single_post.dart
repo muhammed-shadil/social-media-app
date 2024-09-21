@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trek/model/postmodel.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
 import 'package:trek/view/screens/profile_screen/profile_screen.dart';
@@ -6,13 +7,12 @@ import 'package:trek/view/screens/profile_screen/profile_screen.dart';
 class SinglePost extends StatefulWidget {
   SinglePost(
       {super.key,
-      required this.username,
-      required this.location,
-      required this.userid});
-  final String username;
-  final String userid;
-
-  final String location;
+      required this.postType,
+      required this.authorDetails,
+      required this.posts});
+  final String postType;
+  final AuthorDetails authorDetails;
+  final Fetchpost posts;
   @override
   _SinglePostState createState() => _SinglePostState();
 }
@@ -43,9 +43,11 @@ class _SinglePostState extends State<SinglePost>
             crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: 25,
-              ),
+              widget.postType == "Image"
+                  ? Container(
+                      width: 25,
+                    )
+                  : SizedBox(),
               Spacer(),
               SizedBox(
                 width: 180,
@@ -53,12 +55,12 @@ class _SinglePostState extends State<SinglePost>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.username,
+                      widget.authorDetails.username,
                       style: styles.usernamefont,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      widget.location,
+                      widget.authorDetails.name,
                       style: styles.postlocation,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -71,12 +73,12 @@ class _SinglePostState extends State<SinglePost>
                       context,
                       MaterialPageRoute(
                           builder: (_) => ProfileScreenWrapper(
-                                userid: widget.userid,
+                                userid: widget.authorDetails.id,
                               )));
                 },
-                child: const CircleAvatar(
-                  backgroundImage: AssetImage(
-                      "assets/christopher-campbell-rDEOVtE7vOs-unsplash.jpg"),
+                child: CircleAvatar(
+                  backgroundImage:
+                      NetworkImage(widget.authorDetails.profilePicture),
                 ),
               )
             ],
@@ -105,12 +107,14 @@ class _SinglePostState extends State<SinglePost>
           width: isSwapped ? 90 : screenWidth * 0.9,
           height: isSwapped ? 120 : screenHeight * 0.6,
           decoration: BoxDecoration(
-            image: const DecorationImage(
-              image: AssetImage(
-                "assets/b64ac4c65983e8702efcc1024bf6b142-e1505106508525.jpg",
-              ),
-              fit: BoxFit.cover,
-            ),
+            image: widget.postType == "Image"
+                ? DecorationImage(
+                    image: NetworkImage(
+                      widget.posts.imageUrl!,
+                    ),
+                    fit: BoxFit.cover,
+                  )
+                : null,
             borderRadius: isSwapped
                 ? const BorderRadius.only(
                     topLeft: Radius.circular(25),
@@ -123,49 +127,82 @@ class _SinglePostState extends State<SinglePost>
               color: isSwapped ? constants.backgroundColor : Colors.transparent,
             ),
           ),
+          child: widget.postType == "Blog"
+              ? Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      border: const Border(
+                          left: BorderSide(color: constants.white, width: 0.1),
+                          right: BorderSide(color: constants.white, width: 0.1),
+                          bottom: BorderSide(color: constants.white),
+                          top: BorderSide(color: constants.white))),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        widget.posts.caption,
+                        style: styles.blogtitle,
+                      ),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              widget.posts.blogContent!,
+                              style: styles.postlocation,
+                            ),
+                          ])
+                    ],
+                  ),
+                )
+              : null,
         ),
       ),
     );
   }
 
   Widget buildSmallImage(double screenWidth, double screenHeight) {
-    return AnimatedPositioned(
-      top: isSwapped ? 70 : 5,
-      left: isSwapped ? 0 : 5,
-      duration: const Duration(milliseconds: 500),
-      child: GestureDetector(
-        onTap: isSwapped
-            ? null
-            : () {
-                // Handle tap on small image when it's smaller
-                setState(() {
-                  isSwapped = !isSwapped;
-                });
-              },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 500),
-          width: isSwapped ? screenWidth * 0.9 : 90,
-          height: isSwapped ? screenHeight * 0.6 : 120,
-          decoration: BoxDecoration(
-            border: isSwapped
-                ? Border.all(width: 0, color: Colors.transparent)
-                : Border.all(width: 5, color: constants.backgroundColor),
-            image: const DecorationImage(
-              image: AssetImage(
-                "assets/michael-dam-mEZ3PoFGs_k-unsplash.jpg",
-              ),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: isSwapped
-                ? BorderRadius.circular(30)
-                : const BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25),
-                    bottomLeft: Radius.circular(25),
+    return widget.postType == "Image"
+        ? AnimatedPositioned(
+            top: isSwapped ? 70 : 5,
+            left: isSwapped ? 0 : 5,
+            duration: const Duration(milliseconds: 500),
+            child: GestureDetector(
+              onTap: isSwapped
+                  ? null
+                  : () {
+                      // Handle tap on small image when it's smaller
+                      setState(() {
+                        isSwapped = !isSwapped;
+                      });
+                    },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                width: isSwapped ? screenWidth * 0.9 : 90,
+                height: isSwapped ? screenHeight * 0.6 : 120,
+                decoration: BoxDecoration(
+                  border: isSwapped
+                      ? Border.all(width: 0, color: Colors.transparent)
+                      : Border.all(width: 5, color: constants.backgroundColor),
+                  image: const DecorationImage(
+                    image: AssetImage(
+                      "assets/michael-dam-mEZ3PoFGs_k-unsplash.jpg",
+                    ),
+                    fit: BoxFit.cover,
                   ),
-          ),
-        ),
-      ),
-    );
+                  borderRadius: isSwapped
+                      ? BorderRadius.circular(30)
+                      : const BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                          bottomLeft: Radius.circular(25),
+                        ),
+                ),
+              ),
+            ),
+          )
+        : Container();
   }
 }

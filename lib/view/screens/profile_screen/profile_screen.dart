@@ -8,6 +8,7 @@ import 'package:trek/model/UserProfile.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
 import 'package:trek/view/screens/my_following/my_followings.dart';
+import 'package:trek/view/screens/profile_screen/Shimmer_profile.dart';
 import 'package:trek/view/screens/profile_screen/popup_menu.dart';
 import 'package:trek/view/widgets/main_button.dart';
 
@@ -68,11 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: BlocBuilder<UserprofileBloc, UserprofileState>(
         builder: (context, state) {
           if (state is UserProfileLoading) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: constants.white,
-              ),
-            );
+            return ShimmerProfile();
           } else if (state is UserProfileFaild) {
             return Text(state.error);
           } else if (state is UserProfileSuccess) {
@@ -129,6 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       result.user.username,
                                       style: styles.postlocation,
                                     ),
+                                    constants.height3
                                   ],
                                 ),
                                 GestureDetector(
@@ -144,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Text("Following"),
+                                      const Text("Following"),
                                       Text(result.user.following.length
                                           .toString()),
                                     ],
@@ -167,32 +165,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: styles.bio,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.65,
-                        child: isCurrentUser
-                            ? MainButton(
-                                child: const Text(
-                                  "Edit Profile",
-                                  style: styles.mainbuttontext,
-                                ),
-                                onpressed: () {},
-                              )
-                            : MainButton(
-                                child: const Text(
-                                  "Follow",
-                                  style: styles.mainbuttontext,
-                                ),
-                                onpressed: () {
-                                  // Implement Follow/Unfollow logic
-                                },
-                              ),
-                      ),
-                      PopupMenu()
-                    ],
-                  ),
+                  isCurrentUser
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.65,
+                                child: MainButton(
+                                  child: const Text(
+                                    "Edit Profile",
+                                    style: styles.mainbuttontext,
+                                  ),
+                                  onpressed: () {},
+                                )),
+                            const PopupMenu()
+                          ],
+                        )
+                      : Center(
+                          child: MainButton(
+                            child: const Text(
+                              "Follow",
+                              style: styles.mainbuttontext,
+                            ),
+                            onpressed: () {
+                              // Implement Follow/Unfollow logic
+                            },
+                          ),
+                        ),
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: GridView.builder(
