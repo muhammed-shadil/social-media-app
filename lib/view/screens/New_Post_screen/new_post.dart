@@ -1,34 +1,57 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:trek/controller/post/image_picker/bloc/image_picker_bloc.dart';
+import 'package:trek/controller/post/newpost/bloc/newpost_bloc.dart';
 
 class NewPostWrappper extends StatelessWidget {
   const NewPostWrappper({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ImagePickerBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ImagePickerBloc(),
+        ),
+        BlocProvider(
+          create: (context) => NewpostBloc(),
+        ),
+      ],
       child: const NewPosts(),
     );
   }
 }
 
-class NewPosts extends StatelessWidget {
+class NewPosts extends StatefulWidget {
   const NewPosts({super.key});
 
   @override
+  State<NewPosts> createState() => _NewPostsState();
+}
+
+class _NewPostsState extends State<NewPosts> {
+  XFile? imagefile;
+  @override
   Widget build(BuildContext context) {
     final image = BlocProvider.of<ImagePickerBloc>(context);
+    final createpost = BlocProvider.of<NewpostBloc>(context);
+
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        createpost.add(CreateNewPost(imagefile: imagefile));
+      }),
       body: Column(
         children: [
           BlocBuilder<ImagePickerBloc, ImagePickerState>(
             builder: (context, state) {
               if (state is SuccessfullyPickedImage) {
+                imagefile = state.file;
                 return Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.7,

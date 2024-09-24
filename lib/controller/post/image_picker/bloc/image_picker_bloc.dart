@@ -21,7 +21,7 @@ class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickerState> {
 
       if (res != null) {
         final memoryImg = await res.readAsBytes();
-        emit(SuccessfullyPickedImage(imageurl: memoryImg));
+        emit(SuccessfullyPickedImage(imageurl: memoryImg, file: res));
       } else {
         emit(FaildPickImage(message: 'Image not picked'));
       }
@@ -39,7 +39,7 @@ class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickerState> {
 
       if (res != null) {
         final memoryImg = await res.readAsBytes();
-        emit(SuccessfullyPickedImage(imageurl: memoryImg));
+        emit(SuccessfullyPickedImage(imageurl: memoryImg, file: res));
       } else {
         emit(FaildPickImage(message: 'Image not picked'));
       }

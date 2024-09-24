@@ -7,8 +7,8 @@ final class ImagePickerInitial extends ImagePickerState {}
 
 class SuccessfullyPickedImage extends ImagePickerState {
   final Uint8List imageurl;
-
-  SuccessfullyPickedImage({required this.imageurl});
+  final XFile? file;
+  SuccessfullyPickedImage({this.file, required this.imageurl});
 }
 
 class FaildPickImage extends ImagePickerState {
