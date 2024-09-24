@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trek/controller/post/cubit/fetch_posts_cubit.dart';
 import 'package:trek/view/screens/Home_Screen/shimmer_home.dart';
 import 'package:trek/view/screens/Home_Screen/single_post.dart';
+import 'package:trek/view/screens/New_Post_screen/new_post.dart';
 import 'package:trek/view/screens/profile_screen/profile_screen.dart';
 import 'package:trek/view/screens/signin/Signin_Screen.dart';
 import 'package:trek/view/screens/friends/followers.dart';
@@ -71,11 +73,19 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30),
-                        child: Icon(
-                          Icons.camera_alt_outlined,
-                          size: 25,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const NewPostWrappper()));
+                          },
+                          child: const Icon(
+                            Icons.camera_alt_outlined,
+                            size: 25,
+                          ),
                         ),
                       ),
                       GestureDetector(
