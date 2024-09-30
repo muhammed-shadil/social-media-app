@@ -1,4 +1,7 @@
-import 'package:trek/model/UserProfile.dart';
+
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
 import 'package:trek/utils/apiprovider/apiprovider.dart';
 import 'package:http/http.dart' as http;
 
@@ -44,5 +47,9 @@ class Apirepository {
   Future<http.Response> fetchAllposts(
       String token, int limit, int currentPage) async {
     return apiprovider.fetchAllposts(limit, currentPage, token);
+  }
+
+  Future<http.Response>createNewPost({required String contentType,required String caption,String? blogcontent,File? file,required String filename,required String refreshtoken}){
+    return apiprovider.createNewPost(contentType, caption, blogcontent, file, filename, refreshtoken);
   }
 }
