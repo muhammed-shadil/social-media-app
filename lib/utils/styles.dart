@@ -21,4 +21,7 @@ class styles {
       TextStyle(color: Colors.white, fontSize: 17);
   static const TextStyle blogtitle =
       TextStyle(color: Colors.white, fontSize: 18);
+
+  static const TextStyle imagepickertitle =
+      TextStyle(color: Colors.white, fontSize: 18);
 }

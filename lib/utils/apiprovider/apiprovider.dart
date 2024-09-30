@@ -147,7 +147,6 @@ class Apiprovider {
         contentType: MediaType("image", "png"),
       ));
       request.headers.addAll(headers);
-
       request.fields.addAll({
         "contentType": contentType,
         "caption": caption,
