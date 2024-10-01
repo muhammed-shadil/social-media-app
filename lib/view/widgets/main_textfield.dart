@@ -6,16 +6,19 @@ import 'package:trek/utils/styles.dart';
 class MainTextfield extends StatelessWidget {
   const MainTextfield(
       {super.key,
-      required this.preicon,
+      this.preicon,
       required this.hinttext,
       required this.namefield,
       required this.keyboard,
-      required this.validator, this.controller});
-  final IconData preicon;
+      required this.validator,
+      this.controller,
+      this.maxlines});
+  final IconData? preicon;
   final String hinttext;
   final String namefield;
   final TextInputType keyboard;
-final TextEditingController? controller;
+  final int? maxlines;
+  final TextEditingController? controller;
   final String? Function(dynamic value) validator;
   @override
   Widget build(BuildContext context) {
@@ -29,15 +32,18 @@ final TextEditingController? controller;
             child: Text(namefield),
           ),
           TextFormField(
+            maxLines: maxlines,
             textInputAction: TextInputAction.next,
             inputFormatters: [
               FilteringTextInputFormatter.deny(RegExp(r'\s')),
-            ],controller: controller,
+            ],
+            controller: controller,
             validator: validator,
             keyboardType: keyboard,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             style: const TextStyle(color: constants.white),
-            decoration: InputDecoration(errorMaxLines: 3,
+            decoration: InputDecoration(
+              errorMaxLines: 3,
               contentPadding: const EdgeInsets.all(10),
               hintText: hinttext,
               hintStyle: styles.textfieldhintstyle,

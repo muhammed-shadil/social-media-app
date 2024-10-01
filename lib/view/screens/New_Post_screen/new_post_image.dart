@@ -10,6 +10,7 @@ import 'package:trek/controller/post/image_picker/bloc/image_picker_bloc.dart';
 import 'package:trek/controller/post/newpost/bloc/newpost_bloc.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
+import 'package:trek/view/screens/New_Post_screen/new_post_blog.dart';
 
 class NewPostWrappper extends StatelessWidget {
   const NewPostWrappper({super.key});
@@ -91,7 +92,10 @@ class _NewPostsState extends State<NewPosts> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => const NewPostBlog()));
+                    },
                     icon: const Icon(
                       Icons.close_outlined,
                       size: 30,
@@ -102,7 +106,7 @@ class _NewPostsState extends State<NewPosts> {
                     "Click your dream place",
                     style: styles.imagepickertitle,
                   ),
-                  SizedBox(),
+                  const SizedBox(),
                 ],
               ),
             ),
