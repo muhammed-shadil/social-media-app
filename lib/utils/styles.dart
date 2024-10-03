@@ -24,4 +24,7 @@ class styles {
 
   static const TextStyle imagepickertitle =
       TextStyle(color: Colors.white, fontSize: 18);
+
+  static const TextStyle homescreentitle =
+      TextStyle(fontSize: 23, fontWeight: FontWeight.bold);
 }

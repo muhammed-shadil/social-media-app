@@ -13,8 +13,7 @@ class shimmer_home extends StatelessWidget {
     return ListView.builder(
       itemCount: 2,
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-          // color: Color.fromARGB(255, 40, 39, 37),
+        return SizedBox(
           height: MediaQuery.of(context).size.height * 0.78,
           width: MediaQuery.of(context).size.width * 0.9,
           child: Stack(
@@ -30,11 +29,11 @@ class shimmer_home extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Shimmer.fromColors(
-                        baseColor: const Color.fromARGB(255, 31, 32, 38),
-                        highlightColor: const Color.fromARGB(255, 54, 55, 61),
+                        baseColor: constants.shimmerBase,
+                        highlightColor: constants.shimmerhighlite,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.amber,
+                              color: constants.offwhite,
                               borderRadius: BorderRadius.circular(10)),
                           child: const Text(
                             "Victor Daniel",
@@ -43,18 +42,18 @@ class shimmer_home extends StatelessWidget {
                         ),
                       ),
                       Shimmer.fromColors(
-                          baseColor: const Color.fromARGB(255, 31, 32, 38),
-                          highlightColor: const Color.fromARGB(255, 54, 55, 61),
+                          baseColor: constants.shimmerBase,
+                          highlightColor: constants.shimmerhighlite,
                           child: Container(
                               decoration: BoxDecoration(
-                                  color: Colors.amber,
+                                  color: constants.offwhite,
                                   borderRadius: BorderRadius.circular(10)),
-                              child: Text("Agra, New Delhi"))),
+                              child: const Text("Agra, New Delhi"))),
                     ],
                   ),
                   Shimmer.fromColors(
-                    baseColor: const Color.fromARGB(255, 31, 32, 38),
-                    highlightColor: const Color.fromARGB(255, 54, 55, 61),
+                    baseColor: constants.shimmerBase,
+                    highlightColor: constants.shimmerhighlite,
                     child: const CircleAvatar(
                       backgroundImage: AssetImage(
                           "assets/christopher-campbell-rDEOVtE7vOs-unsplash.jpg"),
@@ -65,8 +64,8 @@ class shimmer_home extends StatelessWidget {
               Positioned(
                   top: 70,
                   child: Shimmer.fromColors(
-                    baseColor: const Color.fromARGB(255, 31, 32, 38),
-                    highlightColor: const Color.fromARGB(255, 54, 55, 61),
+                    baseColor: constants.shimmerBase,
+                    highlightColor: constants.shimmerhighlite,
                     child: Container(
                       decoration: BoxDecoration(
                         image: const DecorationImage(
@@ -84,8 +83,8 @@ class shimmer_home extends StatelessWidget {
               Positioned(
                   top: 5,
                   child: Shimmer.fromColors(
-                    baseColor: const Color.fromARGB(255, 31, 32, 38),
-                    highlightColor: const Color.fromARGB(255, 54, 55, 61),
+                    baseColor: constants.shimmerBase,
+                    highlightColor: constants.shimmerhighlite,
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -97,7 +96,7 @@ class shimmer_home extends StatelessWidget {
                             topLeft: Radius.circular(25),
                             bottomRight: Radius.circular(25),
                             bottomLeft: Radius.circular(25)),
-                        color: const Color.fromARGB(255, 204, 162, 10),
+                        color: constants.offwhite,
                       ),
                       width: 90,
                       height: 120,

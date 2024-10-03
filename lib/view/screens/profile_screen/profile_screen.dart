@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trek/controller/User_profile/bloc/userprofile_bloc.dart';
-import 'package:trek/controller/authentication_bloc/login_bloc.dart';
 import 'package:trek/model/UserProfile.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
@@ -69,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: BlocBuilder<UserprofileBloc, UserprofileState>(
         builder: (context, state) {
           if (state is UserProfileLoading) {
-            return ShimmerProfile();
+            return const ShimmerProfile();
           } else if (state is UserProfileFaild) {
             return Text(state.error);
           } else if (state is UserProfileSuccess) {
@@ -79,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.5,
                     child: Stack(
@@ -95,11 +94,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  Colors.transparent,
-                                  Colors.transparent,
-                                  Colors.transparent,
-                                  Colors.black.withOpacity(0.5),
-                                  Colors.black.withOpacity(0.9),
+                                  constants.transparent,
+                                  constants.transparent,
+                                  constants.transparent,
+                                  constants.blackOP5,
+                                  constants.blackOP9
                                 ],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
@@ -187,9 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               "Follow",
                               style: styles.mainbuttontext,
                             ),
-                            onpressed: () {
-                              // Implement Follow/Unfollow logic
-                            },
+                            onpressed: () {},
                           ),
                         ),
                   Padding(
@@ -212,7 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             borderRadius: BorderRadius.circular(15),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
+                                color: constants.blackOP2,
                                 blurRadius: 5,
                                 offset: const Offset(2, 2),
                               ),

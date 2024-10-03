@@ -8,8 +8,8 @@ import 'package:trek/view/widgets/main_textfield.dart';
 import 'package:trek/view/screens/signup/signup_screen.dart';
 import 'package:trek/utils/constants.dart';
 
-class signinwrapper extends StatelessWidget {
-  const signinwrapper({super.key});
+class Signinwrapper extends StatelessWidget {
+  const Signinwrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class SigninScreen extends StatelessWidget {
             if (state is loadingstate) {
               const Center(
                   child: CircularProgressIndicator(
-                color: Colors.white,
+                color: constants.white,
               ));
             } else if (state is loginerror) {
               ScaffoldMessenger.of(context)

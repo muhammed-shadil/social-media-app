@@ -60,8 +60,8 @@ class _FollowersScreenState extends State<FollowersScreen> {
           title: const PreferredSize(
             preferredSize: Size.fromHeight(40.0),
             child: TabBar(
-              indicatorColor: Colors.transparent,
-              dividerColor: Colors.transparent,
+              indicatorColor: constants.transparent,
+              dividerColor: constants.transparent,
               tabAlignment: TabAlignment.center,
               labelStyle: TextStyle(fontSize: 23),
               labelPadding: EdgeInsets.only(right: 10, left: 10),
@@ -99,10 +99,9 @@ class _FollowersScreenState extends State<FollowersScreen> {
                       builder: (context, state) {
                     if (state is SuccessFollewersUnfollowers) {
                       friends = state.suggestons;
-                      // print(friends[0].name);
+
                       if (friends.isEmpty) {
-                        return const Center(
-                            child: Text("No Friends found"));
+                        return const Center(child: Text("No Friends found"));
                       }
                       return Expanded(
                         child: ListView.separated(
@@ -115,15 +114,12 @@ class _FollowersScreenState extends State<FollowersScreen> {
                                   showicon: true,
                                 ),
                             separatorBuilder: (context, index) =>
-                                const SizedBox(
-                                  height: 10,
-                                ),
+                                constants.height10,
                             itemCount: friends.length),
                       );
                     } else if (state is FetchFollowLoadingstate) {
                       return const ShimmerFollowers();
                     } else if (state is FaildFollewersUnfollowers) {
-                      // print(state.error);
                       return Text(state.error);
                     }
                     return const Center(
@@ -160,9 +156,6 @@ class _FollowersScreenState extends State<FollowersScreen> {
                       return Expanded(
                         child: ListView.separated(
                             itemBuilder: (context, index) => UserTile(
-                                  // pressed: () {
-                                  //   // print("eeeeeeeeeeee");
-                                  // },
                                   name: find.suggestions[index].name,
                                   username: find.suggestions[index].username,
                                   image: find.suggestions[index].profilePicture,
@@ -171,15 +164,12 @@ class _FollowersScreenState extends State<FollowersScreen> {
                                   showicon: true,
                                 ),
                             separatorBuilder: (context, index) =>
-                                const SizedBox(
-                                  height: 10,
-                                ),
+                                constants.height10,
                             itemCount: find.suggestions.length),
                       );
                     } else if (state is FetchFollowLoadingstate) {
                       return const ShimmerFollowers();
                     } else if (state is FaildFollewersUnfollowers) {
-                      // print(state.error);
                       return Text(state.error);
                     }
                     return const Text("No data available");

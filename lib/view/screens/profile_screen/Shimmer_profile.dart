@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
 import 'package:trek/view/widgets/main_button.dart';
 
@@ -13,10 +14,10 @@ class ShimmerProfile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Shimmer.fromColors(
-            baseColor: const Color.fromARGB(255, 31, 32, 38),
-            highlightColor: const Color.fromARGB(255, 54, 55, 61),
+            baseColor: constants.shimmerBase,
+            highlightColor: constants.shimmerhighlite,
             child: Container(
-              color: Colors.amber,
+              color: constants.offwhite,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.5,
             ),
@@ -34,8 +35,8 @@ class ShimmerProfile extends StatelessWidget {
           ),
           Center(
             child: Shimmer.fromColors(
-              baseColor: const Color.fromARGB(255, 31, 32, 38),
-              highlightColor: const Color.fromARGB(255, 54, 55, 61),
+              baseColor: constants.shimmerBase,
+              highlightColor: constants.shimmerhighlite,
               child: MainButton(
                 child: const Text(
                   "Follow",
@@ -61,15 +62,15 @@ class ShimmerProfile extends StatelessWidget {
               itemCount: 6,
               itemBuilder: (BuildContext context, int index) {
                 return Shimmer.fromColors(
-                  baseColor: const Color.fromARGB(255, 31, 32, 38),
-                  highlightColor: const Color.fromARGB(255, 54, 55, 61),
+                  baseColor: constants.shimmerBase,
+                  highlightColor: constants.shimmerhighlite,
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
+                          color: constants.blackOP2,
                           blurRadius: 5,
                           offset: const Offset(2, 2),
                         ),

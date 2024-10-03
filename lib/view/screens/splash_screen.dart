@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   MaterialPageRoute(builder: (_) => const HomeScreenWrapper()));
             } else if (state is unauthenticated) {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const signinwrapper()));
+                  MaterialPageRoute(builder: (_) => const Signinwrapper()));
             } else if (state is AuthenticatedErrorState) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.message)));

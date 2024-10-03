@@ -43,7 +43,7 @@ class SignupScreen extends StatelessWidget {
                   .showSnackBar(SnackBar(content: Text(state.message)));
 
               Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const signinwrapper()));
+                  MaterialPageRoute(builder: (_) => const Signinwrapper()));
             }
           },
           child: Center(

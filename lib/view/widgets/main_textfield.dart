@@ -47,7 +47,7 @@ class MainTextfield extends StatelessWidget {
               contentPadding: const EdgeInsets.all(10),
               hintText: hinttext,
               hintStyle: styles.textfieldhintstyle,
-              prefixIcon: Icon(
+              prefixIcon:preicon==null?null: Icon(
                 preicon,
                 color: constants.secodarycolor,
               ),

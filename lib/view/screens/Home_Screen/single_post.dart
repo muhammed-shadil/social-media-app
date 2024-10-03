@@ -5,7 +5,7 @@ import 'package:trek/utils/styles.dart';
 import 'package:trek/view/screens/profile_screen/profile_screen.dart';
 
 class SinglePost extends StatefulWidget {
-  SinglePost(
+  const SinglePost(
       {super.key,
       required this.postType,
       required this.authorDetails,
@@ -47,8 +47,8 @@ class _SinglePostState extends State<SinglePost>
                   ? Container(
                       width: 25,
                     )
-                  : SizedBox(),
-              Spacer(),
+                  : const SizedBox(),
+              const Spacer(),
               SizedBox(
                 width: 180,
                 child: Column(

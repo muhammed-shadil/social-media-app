@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:trek/controller/post/image_picker/bloc/image_picker_bloc.dart';
@@ -93,8 +91,10 @@ class _NewPostsState extends State<NewPosts> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => const NewPostBlog()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const NewPostBlog()));
                     },
                     icon: const Icon(
                       Icons.close_outlined,
@@ -148,7 +148,7 @@ class _NewPostsState extends State<NewPosts> {
                                     },
                                   ),
                                   CupertinoActionSheetAction(
-                                    child: Text('Camera'),
+                                    child: const Text('Camera'),
                                     onPressed: () {
                                       // close the options modal
                                       Navigator.of(context).pop();

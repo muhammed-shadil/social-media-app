@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek/controller/followers_bloc/bloc/follow_unfollow_bloc.dart';
 import 'package:trek/controller/followers_bloc/fetch_followers/followers_bloc.dart';
 import 'package:trek/model/FollewersUnfollowers_model.dart';
+import 'package:trek/utils/constants.dart';
 import 'package:trek/view/screens/friends/shimmer_followers.dart';
 import 'package:trek/view/screens/friends/user_tile.dart';
 import 'package:trek/view/widgets/search_textfield.dart';
@@ -21,7 +22,7 @@ class MyFollowingsWrapper extends StatelessWidget {
           create: (context) => FollowUnfollowBloc(),
         ),
       ],
-      child: MyFollowings(),
+      child: const MyFollowings(),
     );
   }
 }
@@ -43,7 +44,11 @@ class _MyFollowingsState extends State<MyFollowings> {
   late List<Suggestion> followings;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Following"),centerTitle: true,),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Following"),
+        centerTitle: true,
+      ),
       body: Center(
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.95,
@@ -63,7 +68,6 @@ class _MyFollowingsState extends State<MyFollowings> {
                   builder: (context, state) {
                 if (state is SuccessFollowings) {
                   followings = state.followings;
-                  // print(friends[0].name);
                   if (followings.isEmpty) {
                     return const Center(child: Text("No suggestions found"));
                   }
@@ -74,17 +78,16 @@ class _MyFollowingsState extends State<MyFollowings> {
                               username: followings[index].username,
                               image: followings[index].profilePicture,
                               enabled: true,
-                              uid: followings[index].id, showicon: false,
+                              uid: followings[index].id,
+                              showicon: false,
                             ),
-                        separatorBuilder: (context, index) => const SizedBox(
-                              height: 10,
-                            ),
+                        separatorBuilder: (context, index) =>
+                            constants.height10,
                         itemCount: followings.length),
                   );
                 } else if (state is FetchFollowLoadingstate) {
                   return const ShimmerFollowers();
                 } else if (state is FaildFollewersUnfollowers) {
-                  // print(state.error);
                   return Text(state.error);
                 }
                 return const Center(

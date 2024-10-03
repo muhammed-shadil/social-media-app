@@ -11,6 +11,37 @@ class NewPostBlog extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Container(
+            width: 80,
+            height: 80,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color.fromARGB(255, 45, 46, 52),
+            ),
+            child: Center(
+              child: Container(
+                width: 70,
+                height: 70,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromARGB(255, 83, 84, 89),
+                ),
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: 52,
+                      height: 52,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: constants.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )),
         body: Column(
           children: [
             Padding(
@@ -36,13 +67,15 @@ class NewPostBlog extends StatelessWidget {
                 ],
               ),
             ),
+            constants.height30,
             MainTextfield(
                 maxlines: 1,
-                preicon: Icons.format_quote_outlined,
+                preicon: Icons.library_books_outlined,
                 hinttext: "Enter you words",
                 namefield: "Title",
                 keyboard: TextInputType.multiline,
                 validator: (_) {}),
+            constants.height20,
             MainTextfield(
                 maxlines: 5,
                 hinttext: "Explain you words",

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trek/controller/post/cubit/fetch_posts_cubit.dart';
+import 'package:trek/utils/styles.dart';
 import 'package:trek/view/screens/Home_Screen/shimmer_home.dart';
 import 'package:trek/view/screens/Home_Screen/single_post.dart';
 import 'package:trek/view/screens/New_Post_screen/new_post_image.dart';
@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.only(top: 5),
               child: Text(
                 "Trek",
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                style: styles.homescreentitle,
               ),
             ),
             automaticallyImplyLeading: false,
@@ -112,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => const signinwrapper()));
+                                builder: (_) => const Signinwrapper()));
                       },
                       icon: const Icon(
                         Icons.notifications_active_outlined,
@@ -133,15 +133,13 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               body: Center(
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: BlocBuilder<FetchPostsCubit, FetchPostsState>(
                     builder: (context, state) {
                       if (state is PostLoading) {
                         if (state.posts.isEmpty) {
                           return const shimmer_home();
-                          // const Center(
-                          //     child: CircularProgressIndicator());
                         } else {
                           return ListView.builder(
                             controller: _scrollController,
@@ -152,7 +150,6 @@ class HomeScreen extends StatelessWidget {
                                 return const Center(
                                     child: CircularProgressIndicator());
                               }
-                              print(state.posts[index].blogContent);
                               return SinglePost(
                                 authorDetails: state.posts[index].authorDetails,
                                 postType: state.posts[index].contentType,

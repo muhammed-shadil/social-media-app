@@ -19,7 +19,7 @@ class UserTile extends StatelessWidget {
   final bool showicon;
 
   const UserTile({
-    Key? key,
+    super.key,
     required this.name,
     required this.username,
     required this.image,
@@ -28,10 +28,11 @@ class UserTile extends StatelessWidget {
     required this.enabled,
     required this.uid,
     required this.showicon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
+    final followbloc = BlocProvider.of<FollowUnfollowBloc>(context);
     return BlocProvider(
       create: (context) => UserTileCubit(showicon),
       child: BlocBuilder<UserTileCubit, bool>(
@@ -57,25 +58,14 @@ class UserTile extends StatelessWidget {
                     ? () {
                         context.read<UserTileCubit>().toggleFollow();
                         if (isFollow) {
-                          BlocProvider.of<FollowUnfollowBloc>(context)
-                              .add(FollowingEvent(id: uid));
+                          followbloc.add(FollowingEvent(id: uid));
                         } else {
-                          BlocProvider.of<FollowUnfollowBloc>(context)
-                              .add(UnfollowingEvent(id: uid));
+                          followbloc.add(UnfollowingEvent(id: uid));
                         }
                       }
                     : null,
                 child: BlocBuilder<FollowUnfollowBloc, FollowUnfollowState>(
                   builder: (context, state) {
-                    // if (state is Loadingstate) {
-                    //   return Transform.scale(
-                    //     scale: 0.6,
-                    //     child: const CircularProgressIndicator(
-                    //       color: constants.white,
-                    //     ),
-                    //   );
-                    // }
-                    //  else
                     if (state is Following) {
                       return enabled
                           ? Image.asset(isFollow
