@@ -27,4 +27,7 @@ class styles {
 
   static const TextStyle homescreentitle =
       TextStyle(fontSize: 23, fontWeight: FontWeight.bold);
+       static const TextStyle captiontextfieldhintstyle = TextStyle(
+    color: Colors.black,
+  );
 }

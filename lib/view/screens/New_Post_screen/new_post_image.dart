@@ -8,7 +8,9 @@ import 'package:trek/controller/post/image_picker/bloc/image_picker_bloc.dart';
 import 'package:trek/controller/post/newpost/bloc/newpost_bloc.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
+import 'package:trek/view/screens/New_Post_screen/image_post_confirmscreen.dart';
 import 'package:trek/view/screens/New_Post_screen/new_post_blog.dart';
+import 'package:trek/view/screens/New_Post_screen/widgets/caption_textfield.dart';
 
 class NewPostWrappper extends StatelessWidget {
   const NewPostWrappper({super.key});
@@ -63,7 +65,11 @@ class _NewPostsState extends State<NewPosts> {
               child: Center(
                 child: GestureDetector(
                   onTap: () {
-                    createpost.add(CreateNewPost(imagefile: imagefile));
+                    // createpost.add(CreateNewPost(imagefile: imagefile));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ImagePostConfirmscreen()));
                   },
                   child: Container(
                     width: 52,
@@ -114,14 +120,19 @@ class _NewPostsState extends State<NewPosts> {
               builder: (context, state) {
                 if (state is SuccessfullyPickedImage) {
                   imagefile = state.file;
-                  return Container(
-                    width: MediaQuery.of(context).size.width * 0.94,
-                    height: MediaQuery.of(context).size.height * 0.73,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        image: DecorationImage(
-                            image: MemoryImage(state.imageurl),
-                            fit: BoxFit.cover)),
+                  return Column(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.94,
+                        height: MediaQuery.of(context).size.height * 0.73,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            image: DecorationImage(
+                                image: MemoryImage(state.imageurl),
+                                fit: BoxFit.cover)),
+                      ),
+                      // CaptionTextfield(hinttext: "caption", keyboard: TextInputType.text, validator: (_){})
+                    ],
                   );
                 }
                 return Container(

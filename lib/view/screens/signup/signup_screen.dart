@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trek/utils/styles.dart';
 import 'package:trek/view/screens/signin/Signin_Screen.dart';
 import 'package:trek/controller/authentication_bloc/login_bloc.dart';
-import 'package:trek/view/screens/Home_Screen/home_page.dart';
 import 'package:trek/view/widgets/main_button.dart';
 import 'package:trek/view/widgets/main_textfield.dart';
 import 'package:trek/model/usermodel.dart';
