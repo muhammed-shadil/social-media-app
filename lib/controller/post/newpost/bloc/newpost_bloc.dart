@@ -31,15 +31,17 @@ class NewpostBloc extends Bloc<NewpostEvent, NewpostState> {
 
       String filename = event.imagefile!.path.split('/').last;
       final response = await apirepository.createNewPost(
-          contentType: "Image",
-          blogcontent: "wertyuiokjhgfdsazxcvb",
-          caption: "caption image",
+          contentType: event.postType,
+          blogcontent: event.blogContent,
+          caption: event.caption,
           filename: filename,
           refreshtoken: refreshtoken!,
           file: file);
 
       print(response.statusCode);
       print(response.body);
-    } catch (e) {}
+    } catch (e) {
+      print(" eee${e.toString()}");
+    }
   }
 }

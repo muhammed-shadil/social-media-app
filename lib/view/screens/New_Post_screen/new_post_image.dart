@@ -72,7 +72,8 @@ class _NewPostsState extends State<NewPosts> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => ImagePostConfirmscreen(
+                              builder: (_) => ImagepostconfirmscreenWrapper(
+                                    imagefile: imagefile,
                                     imageurl: imageurl!,
                                   )));
                     } else {
@@ -109,7 +110,7 @@ class _NewPostsState extends State<NewPosts> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const NewPostBlog()));
+                              builder: (_) => const NewPostBlogWrapper()));
                     },
                     icon: const Icon(
                       Icons.close_outlined,

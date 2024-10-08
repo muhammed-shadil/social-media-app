@@ -124,7 +124,7 @@ class Apiprovider {
       String caption,
       String? blogcontent,
       File? file,
-      String filename,
+      String? filename,
       String refreshtoken) async {
     var request = http.MultipartRequest(
       'POST',

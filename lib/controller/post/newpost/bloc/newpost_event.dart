@@ -10,7 +10,7 @@ class CreateNewPost extends NewpostEvent {
   final String? blogContent;
 
   CreateNewPost(
-      {required this.imagefile,
+      {this.imagefile,
       required this.postType,
       required this.caption,
       this.blogContent});

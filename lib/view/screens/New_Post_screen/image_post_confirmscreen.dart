@@ -1,18 +1,50 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:trek/controller/post/newpost/bloc/newpost_bloc.dart';
 import 'package:trek/utils/styles.dart';
-import 'package:trek/view/screens/New_Post_screen/widgets/caption_textfield.dart';
 import 'package:trek/view/widgets/main_button.dart';
 import 'package:trek/view/widgets/main_textfield.dart';
-import 'package:trek/view/widgets/search_textfield.dart';
 
-class ImagePostConfirmscreen extends StatelessWidget {
-  const ImagePostConfirmscreen({super.key, required this.imageurl});
+class ImagepostconfirmscreenWrapper extends StatelessWidget {
+  const ImagepostconfirmscreenWrapper({
+    super.key,
+    required this.imageurl,
+    this.imagefile,
+  });
   final Uint8List imageurl;
+  final XFile? imagefile;
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => NewpostBloc(),
+      child: ImagePostConfirmscreen(
+        imageurl: imageurl,
+      ),
+    );
+  }
+}
+
+class ImagePostConfirmscreen extends StatelessWidget {
+  ImagePostConfirmscreen({
+    super.key,
+    required this.imageurl,
+    this.imagefile,
+  });
+
+  final Uint8List imageurl;
+  final XFile? imagefile;
+
+  TextEditingController captioncontroller = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    final createpost = BlocProvider.of<NewpostBloc>(context);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -46,6 +78,7 @@ class ImagePostConfirmscreen extends StatelessWidget {
                           ),
                         ),
                         MainTextfield(
+                            controller: captioncontroller,
                             space: true,
                             maxlines: 5,
                             hinttext: "Explain you words",
@@ -60,7 +93,14 @@ class ImagePostConfirmscreen extends StatelessWidget {
                       ],
                     ),
                     MainButton(
-                      onpressed: () {},
+                      onpressed: () {
+                        if (formKey.currentState!.validate()) {
+                          createpost.add(CreateNewPost(
+                              imagefile: imagefile,
+                              postType: 'Image',
+                              caption: captioncontroller.text));
+                        }
+                      },
                       child: const Text(
                         "Post",
                         style: styles.mainbuttontext,
