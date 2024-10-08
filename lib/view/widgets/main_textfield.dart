@@ -4,7 +4,7 @@ import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
 
 class MainTextfield extends StatelessWidget {
-  const MainTextfield(
+  MainTextfield(
       {super.key,
       this.preicon,
       required this.hinttext,
@@ -12,7 +12,8 @@ class MainTextfield extends StatelessWidget {
       required this.keyboard,
       required this.validator,
       this.controller,
-      this.maxlines});
+      this.maxlines,
+      this.space = false});
   final IconData? preicon;
   final String hinttext;
   final String namefield;
@@ -20,6 +21,7 @@ class MainTextfield extends StatelessWidget {
   final int? maxlines;
   final TextEditingController? controller;
   final String? Function(dynamic value) validator;
+  final bool space;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -34,9 +36,11 @@ class MainTextfield extends StatelessWidget {
           TextFormField(
             maxLines: maxlines,
             textInputAction: TextInputAction.next,
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp(r'\s')),
-            ],
+            inputFormatters: space == true
+                ? []
+                : [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                  ],
             controller: controller,
             validator: validator,
             keyboardType: keyboard,
@@ -47,10 +51,12 @@ class MainTextfield extends StatelessWidget {
               contentPadding: const EdgeInsets.all(10),
               hintText: hinttext,
               hintStyle: styles.textfieldhintstyle,
-              prefixIcon:preicon==null?null: Icon(
-                preicon,
-                color: constants.secodarycolor,
-              ),
+              prefixIcon: preicon == null
+                  ? null
+                  : Icon(
+                      preicon,
+                      color: constants.secodarycolor,
+                    ),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none),

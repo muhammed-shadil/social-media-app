@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,8 @@ class NewPosts extends StatefulWidget {
 
 class _NewPostsState extends State<NewPosts> {
   XFile? imagefile;
+  Uint8List? imageurl;
+
   @override
   Widget build(BuildContext context) {
     final image = BlocProvider.of<ImagePickerBloc>(context);
@@ -65,11 +68,17 @@ class _NewPostsState extends State<NewPosts> {
               child: Center(
                 child: GestureDetector(
                   onTap: () {
+                    if (imageurl != null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => ImagePostConfirmscreen(
+                                    imageurl: imageurl!,
+                                  )));
+                    } else {
+                      print(null);
+                    }
                     // createpost.add(CreateNewPost(imagefile: imagefile));
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => ImagePostConfirmscreen()));
                   },
                   child: Container(
                     width: 52,
@@ -120,6 +129,7 @@ class _NewPostsState extends State<NewPosts> {
               builder: (context, state) {
                 if (state is SuccessfullyPickedImage) {
                   imagefile = state.file;
+                  imageurl = state.imageurl;
                   return Column(
                     children: [
                       Container(
