@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -22,26 +23,43 @@ class NewpostBloc extends Bloc<NewpostEvent, NewpostState> {
 
   FutureOr<void> createNewPost(
       CreateNewPost event, Emitter<NewpostState> emit) async {
+    emit(LoadingCreatePost());
+    // emit(Loading());
+    print('loading');
     var sharedpref = await SharedPreferences.getInstance();
 
     final refreshtoken = sharedpref.getString(constants.accessToken);
 
     try {
-      final File file = File(event.imagefile!.path);
+      File? file; // Declare file as nullable
+      String? filename;
 
-      String filename = event.imagefile!.path.split('/').last;
+      if (event.imagefile != null && event.postType == "Image") {
+        // Only process the image file if it's an image post
+        file = File(event.imagefile!.path);
+        filename = event.imagefile!.path.split('/').last;
+      }
+
       final response = await apirepository.createNewPost(
           contentType: event.postType,
           blogcontent: event.blogContent,
           caption: event.caption,
-          filename: filename,
+          filename: filename, // Filename can be null for non-image posts
           refreshtoken: refreshtoken!,
-          file: file);
+          file: file); // File can be null for non-image posts
 
       print(response.statusCode);
       print(response.body);
+      final result = jsonDecode(response.body);
+
+      if (response.statusCode == 201) {
+        emit(SuccessfullyCreatePost(message: "Successfully Posted"));
+      } else {
+        emit(FaildCreatePost(message: result['message']));
+      }
     } catch (e) {
-      print(" eee${e.toString()}");
+      print("Error: ${e.toString()}");
+      emit(FaildCreatePost(message: e.toString()));
     }
   }
 }

@@ -107,7 +107,7 @@ class _NewPostsState extends State<NewPosts> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (_) => const NewPostBlogWrapper()));

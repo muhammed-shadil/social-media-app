@@ -39,6 +39,7 @@ class _SinglePostState extends State<SinglePost>
           if (isSwapped) buildLargeImage(screenWidth, screenHeight),
 
           // Text and Avatar (unchanged)
+              widget.postType == "Image"?
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,6 +50,49 @@ class _SinglePostState extends State<SinglePost>
                     )
                   : const SizedBox(),
               const Spacer(),
+              SizedBox(
+                width: 180,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.authorDetails.username,
+                      style: styles.usernamefont,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      widget.authorDetails.name,
+                      style: styles.postlocation,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => ProfileScreenWrapper(
+                                userid: widget.authorDetails.id,
+                              )));
+                },
+                child: CircleAvatar(
+                  backgroundImage:
+                      NetworkImage(widget.authorDetails.profilePicture),
+                ),
+              )
+            ],
+          ):Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // widget.postType == "Image"
+              //     ? Container(
+              //         width: 25,
+              //       )
+              //     : const SizedBox(),
+              // const Spacer(),
               SizedBox(
                 width: 180,
                 child: Column(
@@ -142,7 +186,7 @@ class _SinglePostState extends State<SinglePost>
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        widget.posts.caption,
+                        widget.posts.caption??"No caption",
                         style: styles.blogtitle,
                       ),
                       Column(

@@ -84,8 +84,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Stack(
                       children: [
                         Positioned.fill(
-                          child: Image.asset(
-                            "assets/christopher-campbell-rDEOVtE7vOs-unsplash.jpg",
+                          child: Image.network(
+                            result.user.profilePicture!,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -217,10 +217,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(
-                              "assets/gondola-ride-in-autumn-in-kashmir-2023-10-18t174214.790-min.png",
-                              fit: BoxFit.cover,
-                            ),
+                            child: result.posts[index].contentType == "Image"
+                                ? Image.network(
+                                    result.posts[index].imageUrl!,
+                                    fit: BoxFit.cover,
+                                  )
+                                : null,
                           ),
                         );
                       },

@@ -130,32 +130,36 @@ class Apiprovider {
       'POST',
       Uri.parse("https://social-nest-backend.vercel.app/post/create"),
     );
+
     Map<String, String> headers = {
       'x-refresh-token': refreshtoken,
-      // "Content-type": "multipart/form-data"
     };
-    if (contentType == "Image") {
+
+    request.headers.addAll(headers);
+
+    if (contentType == "Image" && file != null) {
+      // Handle image upload
       request.files.add(http.MultipartFile(
         'image',
-        file!.readAsBytes().asStream(),
+        file.readAsBytes().asStream(),
         file.lengthSync(),
         filename: filename,
         contentType: MediaType("image", "png"),
       ));
-      request.headers.addAll(headers);
-      request.fields.addAll({
-        "contentType": contentType,
-        "caption": caption,
-      });
-    } else {
-      request.headers.addAll(headers);
 
       request.fields.addAll({
         "contentType": contentType,
         "caption": caption,
-        "blogContent": blogcontent!
+      });
+    } else if (contentType == "Blog" && blogcontent != null) {
+      // Handle blog post (no image)
+      request.fields.addAll({
+        "contentType": contentType,
+        "caption": caption,
+        "blogContent": blogcontent,
       });
     }
+
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
     return response;

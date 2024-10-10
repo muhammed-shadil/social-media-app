@@ -18,3 +18,4 @@ class FaildCreatePost extends NewpostState {
 }
 
 class LoadingCreatePost extends NewpostState {}
+// class Loading extends NewpostState {}

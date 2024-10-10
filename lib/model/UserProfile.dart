@@ -26,6 +26,7 @@ class Post {
   bool isArchived;
   List<String> likes;
   String contentType;
+  String? imageUrl;
   String? caption; // Nullable caption
   String? blogContent; // Nullable blog content
   List<Comment> comments;
@@ -40,6 +41,7 @@ class Post {
     required this.isArchived,
     required this.likes,
     required this.contentType,
+    this.imageUrl,
     this.caption,
     this.blogContent,
     required this.comments,
@@ -55,6 +57,7 @@ class Post {
         isArchived: json["isArchived"] ?? false,
         likes: List<String>.from(json["likes"]?.map((x) => x) ?? []),
         contentType: json["content_type"] ?? '',
+        imageUrl: json["image_url"],
         caption: json["caption"], // Leave as nullable
         blogContent: json["blogContent"], // Leave as nullable
         comments: List<Comment>.from(
@@ -71,6 +74,7 @@ class Post {
         "isArchived": isArchived,
         "likes": List<dynamic>.from(likes.map((x) => x)),
         "content_type": contentType,
+        "image_url": imageUrl,
         "caption": caption,
         "blogContent": blogContent,
         "comments": List<dynamic>.from(comments.map((x) => x.toMap())),
