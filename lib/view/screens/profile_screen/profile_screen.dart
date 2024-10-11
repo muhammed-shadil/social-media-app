@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _initializeUserId() async {
     final currentUserId = await _getUserId(); // Wait for the future to resolve
 
-    if (widget.userid == null||widget.userid == currentUserId) {
+    if (widget.userid == null || widget.userid == currentUserId) {
       // Current user's profile
       setState(() {
         isCurrentUser = true;
@@ -57,21 +57,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       BlocProvider.of<UserprofileBloc>(context)
           .add(CurrentUserProfile(id: currentUserId!));
     } else {
-      // Viewing another user's profile
-      // if (widget.userid == currentUserId) {
-      //   // User is viewing their own profile via a passed user ID
-      //   setState(() {
-      //     isCurrentUser = true;
-      //   });
-      //   BlocProvider.of<UserprofileBloc>(context)
-      //       .add(CurrentUserProfile(id: currentUserId!));
-      // } else {
-        // User is viewing someone else's profile
-        setState(() {
-          isCurrentUser = false;
-        });
-        BlocProvider.of<UserprofileBloc>(context)
-            .add(UserProfile(id: widget.userid!));
+      setState(() {
+        isCurrentUser = false;
+      });
+      BlocProvider.of<UserprofileBloc>(context)
+          .add(UserProfile(id: widget.userid!));
       // }
     }
   }
