@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
@@ -49,7 +48,14 @@ class Apirepository {
     return apiprovider.fetchAllposts(limit, currentPage, token);
   }
 
-  Future<http.Response>createNewPost({required String contentType,required String caption,String? blogcontent,File? file, String? filename,required String refreshtoken}){
-    return apiprovider.createNewPost(contentType, caption, blogcontent, file, filename, refreshtoken);
+  Future<http.Response> createNewPost(
+      {required String contentType,
+      required String caption,
+      String? blogcontent,
+      File? file,
+      String? filename,
+      required String refreshtoken}) {
+    return apiprovider.createNewPost(
+        contentType, caption, blogcontent, file, filename, refreshtoken);
   }
 }

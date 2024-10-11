@@ -19,7 +19,7 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
   FetchPostsCubit() : super(FetchPostsInitial());
 
   int _currentPage = 1;
-  final int _limit = 2;
+  final int _limit = 15;
   bool _hasMoreData = true;
   List<Fetchpost> _posts = [];
   bool _isLoadingMore = false;
