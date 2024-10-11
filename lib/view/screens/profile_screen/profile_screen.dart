@@ -40,24 +40,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isCurrentUser = false;
   final List<Post> media = [];
   final List<Post> blog = [];
-
   @override
   void initState() {
     super.initState();
+    _initializeUserId(); // Moved logic to an async function
+  }
 
-    if (widget.userid == null) {
-      _futureUserId = _getUserId();
-      _futureUserId.then((userId) {
+  Future<void> _initializeUserId() async {
+    final currentUserId = await _getUserId(); // Wait for the future to resolve
+
+    if (widget.userid == null||widget.userid == currentUserId) {
+      // Current user's profile
+      setState(() {
+        isCurrentUser = true;
+      });
+      BlocProvider.of<UserprofileBloc>(context)
+          .add(CurrentUserProfile(id: currentUserId!));
+    } else {
+      // Viewing another user's profile
+      // if (widget.userid == currentUserId) {
+      //   // User is viewing their own profile via a passed user ID
+      //   setState(() {
+      //     isCurrentUser = true;
+      //   });
+      //   BlocProvider.of<UserprofileBloc>(context)
+      //       .add(CurrentUserProfile(id: currentUserId!));
+      // } else {
+        // User is viewing someone else's profile
         setState(() {
-          isCurrentUser = true;
+          isCurrentUser = false;
         });
         BlocProvider.of<UserprofileBloc>(context)
-            .add(CurrentUserProfile(id: userId!));
-      });
-    } else {
-      isCurrentUser = false;
-      BlocProvider.of<UserprofileBloc>(context)
-          .add(UserProfile(id: widget.userid!));
+            .add(UserProfile(id: widget.userid!));
+      // }
     }
   }
 
