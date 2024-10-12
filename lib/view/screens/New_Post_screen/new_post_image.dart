@@ -48,7 +48,7 @@ class _NewPostsState extends State<NewPosts> {
     final image = BlocProvider.of<ImagePickerBloc>(context);
     final createpost = BlocProvider.of<NewpostBloc>(context);
 
-    return Scaffold(
+    return Scaffold(appBar: AppBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
           width: 80,

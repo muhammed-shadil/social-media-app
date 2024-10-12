@@ -6,6 +6,7 @@ import 'package:trek/controller/User_profile/bloc/userprofile_bloc.dart';
 import 'package:trek/model/UserProfile.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
+import 'package:trek/view/screens/Edit_profile_screen/edit_profile_screen.dart';
 import 'package:trek/view/screens/my_following/my_followings.dart';
 import 'package:trek/view/screens/profile_screen/Mypostscreen.dart';
 import 'package:trek/view/screens/profile_screen/Shimmer_profile.dart';
@@ -192,7 +193,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           "Edit Profile",
                                           style: styles.mainbuttontext,
                                         ),
-                                        onpressed: () {},
+                                        onpressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      const EditProfileScreen()));
+                                        },
                                       )),
                                   const PopupMenu(),
                                 ],
