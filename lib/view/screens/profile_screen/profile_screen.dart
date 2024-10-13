@@ -220,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 body: Column(
                   children: [
                     const TabBar(
-                      dividerHeight: 0.5,
+                      dividerHeight: 0.3,
                       indicatorColor: Colors.transparent,
                       // dividerColor: Colors.transparent,
                       tabAlignment: TabAlignment.fill,
