@@ -57,7 +57,7 @@ class FollowersBloc extends Bloc<FollowersEvent, FollowersState> {
     var sharedpref = await SharedPreferences.getInstance();
 
     final token = sharedpref.getString(constants.accessToken);
-    final userid = sharedpref.getString(constants.userid);
+    final userid = event.id??sharedpref.getString(constants.userid);
     try {
       final Response response1 =
           await apirepository.myfollowings(token!, userid!);

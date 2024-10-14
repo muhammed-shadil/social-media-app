@@ -9,7 +9,8 @@ import 'package:trek/view/screens/friends/user_tile.dart';
 import 'package:trek/view/widgets/search_textfield.dart';
 
 class MyFollowingsWrapper extends StatelessWidget {
-  const MyFollowingsWrapper({super.key});
+  const MyFollowingsWrapper({super.key, this.id});
+  final String? id;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +23,14 @@ class MyFollowingsWrapper extends StatelessWidget {
           create: (context) => FollowUnfollowBloc(),
         ),
       ],
-      child: const MyFollowings(),
+      child:  MyFollowings(id: id,),
     );
   }
 }
 
 class MyFollowings extends StatefulWidget {
-  const MyFollowings({super.key});
+  const MyFollowings({super.key, this.id});
+  final String? id;
 
   @override
   State<MyFollowings> createState() => _MyFollowingsState();
@@ -38,7 +40,7 @@ class _MyFollowingsState extends State<MyFollowings> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<FollowersBloc>(context).add(FetchFollowingsEvent());
+    BlocProvider.of<FollowersBloc>(context).add(FetchFollowingsEvent(id:widget.id));
   }
 
   late List<Suggestion> followings;
@@ -69,7 +71,7 @@ class _MyFollowingsState extends State<MyFollowings> {
                 if (state is SuccessFollowings) {
                   followings = state.followings;
                   if (followings.isEmpty) {
-                    return const Center(child: Text("No suggestions found"));
+                    return const Center(child: Text("No one Following you"));
                   }
                   return Expanded(
                     child: ListView.separated(

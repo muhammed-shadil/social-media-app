@@ -150,8 +150,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (_) =>
-                                                const MyFollowingsWrapper(),
+                                            builder: (_) => MyFollowingsWrapper(
+                                              id: result.user.id,
+                                            ),
                                           ),
                                         );
                                       },
