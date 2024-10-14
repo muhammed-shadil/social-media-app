@@ -278,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   post: media,
                                   name: result.user.name,
                                   username: result.user.username,
-                                  profileimage: result.user.profilePicture!,
+                                  profileimage: result.user.profilePicture!, isCurrentUser: isCurrentUser,
                                 )));
                   },
                   child: Container(
@@ -322,11 +322,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => Mypostscreen(
+                          builder: (_) => MypostscreenWrpper(
                                 post: blog,
                                 name: result.user.name,
                                 username: result.user.username,
-                                profileimage: result.user.profilePicture!,
+                                profileimage: result.user.profilePicture!, isCurrentUser: isCurrentUser,
                               )));
                 },
                 child: Container(

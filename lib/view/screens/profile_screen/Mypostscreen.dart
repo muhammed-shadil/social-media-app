@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:trek/controller/post/delete/delete_post_bloc.dart';
 import 'package:trek/model/UserProfile.dart';
 import 'package:trek/utils/constants.dart';
@@ -9,11 +10,13 @@ import 'package:trek/utils/styles.dart';
 class MypostscreenWrpper extends StatelessWidget {
   const MypostscreenWrpper({
     super.key,
+    required this.isCurrentUser,
     required this.post,
     required this.name,
     required this.username,
     required this.profileimage,
   });
+  final bool isCurrentUser;
   final List<Post> post;
   final String name;
   final String username;
@@ -27,6 +30,7 @@ class MypostscreenWrpper extends StatelessWidget {
         name: name,
         username: username,
         profileimage: profileimage,
+        isCurrentUser: isCurrentUser,
       ),
     );
   }
@@ -35,10 +39,13 @@ class MypostscreenWrpper extends StatelessWidget {
 class Mypostscreen extends StatefulWidget {
   const Mypostscreen(
       {super.key,
+      required this.isCurrentUser,
       required this.post,
       required this.name,
       required this.username,
       required this.profileimage});
+  final bool isCurrentUser;
+
   final List<Post> post;
   final String name;
   final String username;
@@ -120,13 +127,19 @@ class _MypostscreenState extends State<Mypostscreen>
                                     ],
                                   ),
                                 ),
-                                IconButton(
-                                    onPressed: () {
-                                      BlocProvider.of<DeletePostBloc>(context)
-                                          .add(DeletePost(
-                                              id: widget.post[index].id));
-                                    },
-                                    icon: const Icon(Icons.delete))
+                                widget.isCurrentUser
+                                    ? IconButton(
+                                        onPressed: () {
+                                          BlocProvider.of<DeletePostBloc>(
+                                                  context)
+                                              .add(DeletePost(
+                                                  id: widget.post[index].id));
+                                        },
+                                        icon: const Icon(Icons.delete))
+                                    : CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(widget.profileimage),
+                                      ),
                               ],
                             )
                           : Row(
@@ -152,13 +165,19 @@ class _MypostscreenState extends State<Mypostscreen>
                                     ],
                                   ),
                                 ),
-                                IconButton(
-                                    onPressed: () {
-                                      BlocProvider.of<DeletePostBloc>(context)
-                                          .add(DeletePost(
-                                              id: widget.post[index].id));
-                                    },
-                                    icon: const Icon(Icons.delete))
+                                widget.isCurrentUser
+                                    ? IconButton(
+                                        onPressed: () {
+                                          BlocProvider.of<DeletePostBloc>(
+                                                  context)
+                                              .add(DeletePost(
+                                                  id: widget.post[index].id));
+                                        },
+                                        icon: const Icon(Icons.delete))
+                                    : CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(widget.profileimage),
+                                      ),
                               ],
                             ),
                     ],
