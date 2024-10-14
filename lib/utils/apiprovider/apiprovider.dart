@@ -164,4 +164,14 @@ class Apiprovider {
     var response = await http.Response.fromStream(streamedResponse);
     return response;
   }
+   Future<http.Response> deletepost(String refreshtoken, String id) async {
+    final response = await http.delete(
+        Uri.parse("https://social-nest-backend.vercel.app/post/delete-post/$id"),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-refresh-token': refreshtoken,
+        });
+
+    return response;
+  }
 }

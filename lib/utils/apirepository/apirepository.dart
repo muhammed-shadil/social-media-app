@@ -58,4 +58,7 @@ class Apirepository {
     return apiprovider.createNewPost(
         contentType, caption, blogcontent, file, filename, refreshtoken);
   }
+  Future<http.Response> delete(String token, String id) async {
+    return apiprovider.deletepost(token, id);
+  }
 }

@@ -273,7 +273,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => Mypostscreen(
+                            builder: (_) => MypostscreenWrpper(
                                   post: media,
                                   name: result.user.name,
                                   username: result.user.username,
