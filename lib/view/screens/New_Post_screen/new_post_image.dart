@@ -11,6 +11,7 @@ import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
 import 'package:trek/view/screens/New_Post_screen/image_post_confirmscreen.dart';
 import 'package:trek/view/screens/New_Post_screen/new_post_blog.dart';
+import 'package:trek/view/screens/New_Post_screen/widgets/image_picker_modal.dart';
 
 class NewPostWrappper extends StatelessWidget {
   const NewPostWrappper({super.key});
@@ -127,28 +128,8 @@ class _NewPostsState extends State<NewPosts> {
                                 onPressed: () async {
                                   showCupertinoModalPopup(
                                     context: context,
-                                    builder: (context) => CupertinoActionSheet(
-                                      actions: [
-                                        CupertinoActionSheetAction(
-                                          child: const Text('Photo Gallery'),
-                                          onPressed: () {
-                                            // close the options modal
-                                            Navigator.of(context).pop();
-                                            // get image from gallery
-                                            image.add(GalleryImagePicker());
-                                          },
-                                        ),
-                                        CupertinoActionSheetAction(
-                                          child: const Text('Camera'),
-                                          onPressed: () {
-                                            // close the options modal
-                                            Navigator.of(context).pop();
-                                            // get image from camera
-                                            image.add(CameraImagePicker());
-                                          },
-                                        ),
-                                      ],
-                                    ),
+                                    builder: (context) =>
+                                        ImagePickerModal(image: image),
                                   );
                                 },
                                 icon: const Icon(

@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
+import 'package:trek/view/screens/profile_screen/widgets/logout_modal.dart';
+import 'package:trek/view/screens/signin/Signin_Screen.dart';
 
 class PopupMenu extends StatelessWidget {
   const PopupMenu({
@@ -29,6 +33,55 @@ class PopupMenu extends StatelessWidget {
           child: Center(child: Text("Settings", style: styles.popupMenuButton)),
         ),
         PopupMenuItem(
+          onTap: () async {
+            showCupertinoModalPopup(
+              context: context,
+              builder: (context) => CupertinoAlertDialog(
+                title: const Text(
+                  'Logout',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                content: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.0),
+                  child: Text(
+                    'Are you sure, do you want to logout?',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: const Text(
+                      'YES',
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                    onPressed: () async {
+                      var sharedPref = await SharedPreferences.getInstance();
+                      sharedPref.clear();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const Signinwrapper()),
+                          (Route<dynamic> route) => false);
+                    },
+                  ),
+                  CupertinoDialogAction(
+                    child: const Text('NO'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
           value: 3,
           child: Center(
               child: Container(
@@ -52,6 +105,7 @@ class PopupMenu extends StatelessWidget {
             break;
           case 3:
             Navigator.pushNamed(context, '/logout');
+
             break;
         }
       },
