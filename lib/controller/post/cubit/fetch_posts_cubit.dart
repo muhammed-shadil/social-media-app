@@ -36,13 +36,13 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
     try {
       final Response response =
           await apirepository.fetchAllposts(token!, _limit, _currentPage);
-      print("qqqqqqqqqqqqqqqqqqqq");
-      print(response.statusCode);
+      // print("qqqqqqqqqqqqqqqqqqqq");
+      // print(response.statusCode);
 
       if (response.statusCode == 200) {
-        print(response);
-        print(response.statusCode);
-        print(response.body);
+        // print(response);
+        // print(response.statusCode);
+        // print(response.body);
 
         final result = jsonDecode(response.body);
         print(result.runtimeType);

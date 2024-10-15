@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
-import 'package:trek/view/screens/profile_screen/widgets/logout_modal.dart';
 import 'package:trek/view/screens/signin/Signin_Screen.dart';
 
 class PopupMenu extends StatelessWidget {

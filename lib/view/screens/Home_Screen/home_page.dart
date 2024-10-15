@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trek/controller/post/cubit/fetch_posts_cubit.dart';
 import 'package:trek/utils/styles.dart';
 import 'package:trek/view/screens/Home_Screen/shimmer_home.dart';
-import 'package:trek/view/screens/Home_Screen/single_post.dart';
+import 'package:trek/view/screens/Home_Screen/widgets/single_post.dart';
 import 'package:trek/view/screens/New_Post_screen/new_post_image.dart';
 import 'package:trek/view/screens/profile_screen/profile_screen.dart';
 import 'package:trek/view/screens/signin/Signin_Screen.dart';
@@ -132,69 +132,76 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              body: Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: BlocBuilder<FetchPostsCubit, FetchPostsState>(
-                    builder: (context, state) {
-                      if (state is PostLoading) {
-                        if (state.posts.isEmpty) {
-                          return const shimmer_home();
-                        } else {
-                          return ListView.builder(
-                            controller: _scrollController,
-                            key: const PageStorageKey('postList'),
-                            itemCount: state.posts.length,
-                            itemBuilder: (context, index) {
-                              if (index == state.posts.length) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
+              body: RefreshIndicator(
+                onRefresh: () async {
+                  await BlocProvider.of<FetchPostsCubit>(context).fetchPosts();
+                },
+                child: Center(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: BlocBuilder<FetchPostsCubit, FetchPostsState>(
+                      builder: (context, state) {
+                        if (state is PostLoading) {
+                          if (state.posts.isEmpty) {
+                            return const shimmer_home();
+                          } else {
+                            return ListView.builder(
+                              controller: _scrollController,
+                              key: const PageStorageKey('postList'),
+                              itemCount: state.posts.length,
+                              itemBuilder: (context, index) {
+                                if (index == state.posts.length) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+                                return SinglePost(
+                                  authorDetails:
+                                      state.posts[index].authorDetails,
+                                  postType: state.posts[index].contentType,
+                                  posts: state.posts[index],
+                                );
+                              },
+                            );
+                          }
+                        } else if (state is PostLoaded) {
+                          return NotificationListener<ScrollNotification>(
+                            onNotification: (ScrollNotification scrollInfo) {
+                              if (_scrollController.position.pixels ==
+                                      _scrollController
+                                          .position.maxScrollExtent &&
+                                  state.hasMoreData) {
+                                context
+                                    .read<FetchPostsCubit>()
+                                    .fetchPosts(); // Fetch more posts when reaching the bottom
                               }
-                              return SinglePost(
-                                authorDetails: state.posts[index].authorDetails,
-                                postType: state.posts[index].contentType,
-                                posts: state.posts[index],
-                              );
+                              return false;
                             },
+                            child: ListView.builder(
+                              controller: _scrollController,
+                              key: const PageStorageKey('postList'),
+                              itemCount: state.posts.length +
+                                  (state.hasMoreData ? 1 : 0),
+                              itemBuilder: (context, index) {
+                                if (index == state.posts.length) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+                                print(state.posts[index].blogContent);
+                                return SinglePost(
+                                  authorDetails:
+                                      state.posts[index].authorDetails,
+                                  postType: state.posts[index].contentType,
+                                  posts: state.posts[index],
+                                );
+                              },
+                            ),
                           );
+                        } else if (state is PostError) {
+                          return Center(child: Text('Error: ${state.message}'));
                         }
-                      } else if (state is PostLoaded) {
-                        return NotificationListener<ScrollNotification>(
-                          onNotification: (ScrollNotification scrollInfo) {
-                            if (_scrollController.position.pixels ==
-                                    _scrollController
-                                        .position.maxScrollExtent &&
-                                state.hasMoreData) {
-                              context
-                                  .read<FetchPostsCubit>()
-                                  .fetchPosts(); // Fetch more posts when reaching the bottom
-                            }
-                            return false;
-                          },
-                          child: ListView.builder(
-                            controller: _scrollController,
-                            key: const PageStorageKey('postList'),
-                            itemCount: state.posts.length +
-                                (state.hasMoreData ? 1 : 0),
-                            itemBuilder: (context, index) {
-                              if (index == state.posts.length) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                              print(state.posts[index].blogContent);
-                              return SinglePost(
-                                authorDetails: state.posts[index].authorDetails,
-                                postType: state.posts[index].contentType,
-                                posts: state.posts[index],
-                              );
-                            },
-                          ),
-                        );
-                      } else if (state is PostError) {
-                        return Center(child: Text('Error: ${state.message}'));
-                      }
-                      return Container();
-                    },
+                        return Container();
+                      },
+                    ),
                   ),
                 ),
               )),

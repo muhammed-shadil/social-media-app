@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:trek/controller/post/delete/delete_post_bloc.dart';
 import 'package:trek/model/UserProfile.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/utils/styles.dart';
+import 'package:trek/view/screens/profile_screen/profile_screen.dart';
 
 class MypostscreenWrpper extends StatelessWidget {
   const MypostscreenWrpper({
@@ -57,6 +57,7 @@ class Mypostscreen extends StatefulWidget {
 class _MypostscreenState extends State<Mypostscreen>
     with AutomaticKeepAliveClientMixin {
   @override
+    bool isExpanded = false;
   bool get wantKeepAlive => true;
   bool isSwapped = false;
   @override
@@ -77,115 +78,143 @@ class _MypostscreenState extends State<Mypostscreen>
               },
               icon: const Icon(Icons.arrow_back_ios_new)),
         ),
-        body: Center(
-          child: Container(
-            padding: const EdgeInsets.only(top: 10),
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: ListView.separated(
-              itemCount: widget.post.length,
-              itemBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  height: screenHeight * 0.78,
-                  width: screenWidth * 0.9,
-                  child: Stack(
-                    children: [
-                      // Large Image (conditionally behind or in front based on isSwapped)
-                      if (!isSwapped)
-                        buildLargeImage(screenWidth, screenHeight, index),
-                      buildSmallImage(screenWidth, screenHeight, index),
-                      if (isSwapped)
-                        buildLargeImage(screenWidth, screenHeight, index),
-
-                      // Text and Avatar (unchanged)
-                      widget.post[index].contentType == "Image"
-                          ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                widget.post[index].contentType == "Image"
-                                    ? Container(
-                                        width: 25,
-                                      )
-                                    : const SizedBox(),
-                                const Spacer(),
-                                SizedBox(
-                                  width: 180,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        widget.username,
-                                        style: styles.usernamefont,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Text(
-                                        widget.name,
-                                        style: styles.postlocation,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                widget.isCurrentUser
-                                    ? IconButton(
-                                        onPressed: () {
-                                          BlocProvider.of<DeletePostBloc>(
-                                                  context)
-                                              .add(DeletePost(
-                                                  id: widget.post[index].id));
-                                        },
-                                        icon: const Icon(Icons.delete))
-                                    : CircleAvatar(
-                                        backgroundImage:
-                                            NetworkImage(widget.profileimage),
-                                      ),
-                              ],
-                            )
-                          : Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                SizedBox(
-                                  width: 180,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        widget.username,
-                                        style: styles.usernamefont,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Text(
-                                        widget.name,
-                                        style: styles.postlocation,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                widget.isCurrentUser
-                                    ? IconButton(
-                                        onPressed: () {
-                                          BlocProvider.of<DeletePostBloc>(
-                                                  context)
-                                              .add(DeletePost(
-                                                  id: widget.post[index].id));
-                                        },
-                                        icon: const Icon(Icons.delete))
-                                    : CircleAvatar(
-                                        backgroundImage:
-                                            NetworkImage(widget.profileimage),
-                                      ),
-                              ],
-                            ),
-                    ],
+        body: BlocListener<DeletePostBloc, DeletePostState>(
+          listener: (context, state) {
+            if (state is SuccessfullyDeletePost) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.message)));
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const ProfileScreenWrapper()));
+            } else if (state is FaildDeletePost) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.message)));
+            } else if (state is LoadingDeletePost) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Center(
+                      child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Deleting ...'),
+                  CircularProgressIndicator(
+                    color: constants.white,
                   ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) =>
-                  constants.height10,
+                ],
+              ))));
+            }
+          },
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.only(top: 10),
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: ListView.separated(
+                itemCount: widget.post.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: screenHeight * 0.78,
+                    width: screenWidth * 0.9,
+                    child: Stack(
+                      children: [
+                        // Large Image (conditionally behind or in front based on isSwapped)
+                        if (!isSwapped)
+                          buildLargeImage(screenWidth, screenHeight, index),
+                        buildSmallImage(screenWidth, screenHeight, index),
+                        if (isSwapped)
+                          buildLargeImage(screenWidth, screenHeight, index),
+
+                        // Text and Avatar (unchanged)
+                        widget.post[index].contentType == "Image"
+                            ? Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  widget.post[index].contentType == "Image"
+                                      ? Container(
+                                          width: 25,
+                                        )
+                                      : const SizedBox(),
+                                  const Spacer(),
+                                  SizedBox(
+                                    width: 180,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          widget.username,
+                                          style: styles.usernamefont,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        Text(
+                                          widget.name,
+                                          style: styles.postlocation,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  widget.isCurrentUser
+                                      ? IconButton(
+                                          onPressed: () {
+                                            BlocProvider.of<DeletePostBloc>(
+                                                    context)
+                                                .add(DeletePost(
+                                                    id: widget.post[index].id));
+                                          },
+                                          icon: const Icon(Icons.delete))
+                                      : CircleAvatar(
+                                          backgroundImage:
+                                              NetworkImage(widget.profileimage),
+                                        ),
+                                ],
+                              )
+                            : Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  SizedBox(
+                                    width: 180,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          widget.username,
+                                          style: styles.usernamefont,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        Text(
+                                          widget.name,
+                                          style: styles.postlocation,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  widget.isCurrentUser
+                                      ? IconButton(
+                                          onPressed: () {
+                                            BlocProvider.of<DeletePostBloc>(
+                                                    context)
+                                                .add(DeletePost(
+                                                    id: widget.post[index].id));
+                                          },
+                                          icon: const Icon(Icons.delete))
+                                      : CircleAvatar(
+                                          backgroundImage:
+                                              NetworkImage(widget.profileimage),
+                                        ),
+                                ],
+                              ),
+                      ],
+                    ),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    constants.height10,
+              ),
             ),
           ),
         ),
@@ -194,6 +223,10 @@ class _MypostscreenState extends State<Mypostscreen>
   }
 
   Widget buildLargeImage(double screenWidth, double screenHeight, int index) {
+     final blogContent = widget.post[index].blogContent ?? "No content available";
+    final truncatedContent = blogContent.length > 400
+        ? "${blogContent.substring(0, 400)}..."
+        : blogContent;
     return AnimatedPositioned(
       top: isSwapped ? 5 : 70,
       left: isSwapped ? 5 : 0,
@@ -234,7 +267,7 @@ class _MypostscreenState extends State<Mypostscreen>
           ),
           child: widget.post[index].contentType == "Blog"
               ? Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       border: const Border(
@@ -242,24 +275,44 @@ class _MypostscreenState extends State<Mypostscreen>
                           right: BorderSide(color: constants.white, width: 0.1),
                           bottom: BorderSide(color: constants.white),
                           top: BorderSide(color: constants.white))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        widget.post[index].caption ?? "No caption",
-                        style: styles.blogtitle,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          widget.post[index].caption ?? "No caption",
+                          style: styles.blogtitle,
+                        ),
+                       
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                    constants.height20,
+                    Text(
+                      isExpanded ? blogContent : truncatedContent,
+                      style: styles.postlocation,
+                      maxLines: isExpanded ? null : 14,
+                      overflow: isExpanded
+                          ? TextOverflow.visible
+                          : TextOverflow.ellipsis,
+                    ),
+                    if (blogContent.length > 400)
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isExpanded = !isExpanded;
+                          });
+                        },
+                        child: Text(
+                          isExpanded ? "Show Less" : "Read More",
+                          style: const TextStyle(color: Colors.blue),
+                        ),
                       ),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              widget.post[index].blogContent!,
-                              style: styles.postlocation,
-                            ),
-                          ])
-                    ],
+                                    ],
+                                  ),
+                      ],
+                    ),
                   ),
                 )
               : null,

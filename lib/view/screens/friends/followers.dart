@@ -5,7 +5,7 @@ import 'package:trek/controller/followers_bloc/fetch_followers/followers_bloc.da
 import 'package:trek/model/FollewersUnfollowers_model.dart';
 import 'package:trek/utils/constants.dart';
 import 'package:trek/view/screens/friends/shimmer_followers.dart';
-import 'package:trek/view/screens/friends/user_tile.dart';
+import 'package:trek/view/screens/friends/widgets/user_tile.dart';
 import 'package:trek/view/widgets/search_textfield.dart';
 
 class FollowersScreenWrpper extends StatelessWidget {

@@ -10,7 +10,7 @@ import 'package:trek/view/screens/Edit_profile_screen/edit_profile_screen.dart';
 import 'package:trek/view/screens/my_following/my_followings.dart';
 import 'package:trek/view/screens/profile_screen/Mypostscreen.dart';
 import 'package:trek/view/screens/profile_screen/Shimmer_profile.dart';
-import 'package:trek/view/screens/profile_screen/popup_menu.dart';
+import 'package:trek/view/screens/profile_screen/widgets/popup_menu.dart';
 import 'package:trek/view/widgets/main_button.dart';
 
 class ProfileScreenWrapper extends StatelessWidget {
@@ -271,14 +271,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (_) => MypostscreenWrpper(
                                   post: media,
                                   name: result.user.name,
                                   username: result.user.username,
-                                  profileimage: result.user.profilePicture!, isCurrentUser: isCurrentUser,
+                                  profileimage: result.user.profilePicture!,
+                                  isCurrentUser: isCurrentUser,
                                 )));
                   },
                   child: Container(
@@ -319,14 +320,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (_) => MypostscreenWrpper(
                                 post: blog,
                                 name: result.user.name,
                                 username: result.user.username,
-                                profileimage: result.user.profilePicture!, isCurrentUser: isCurrentUser,
+                                profileimage: result.user.profilePicture!,
+                                isCurrentUser: isCurrentUser,
                               )));
                 },
                 child: Container(
